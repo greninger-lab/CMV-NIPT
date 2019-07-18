@@ -3,7 +3,7 @@ library(ggplot2)
 ###121r04 human 
 setwd('/Users/gerbix/Documents/vikas/NIPT/31119_download/figure_2_final/71719')
 #read_counts <- read.csv("~/Documents/vikas/NIPT/clip_removed/cmv_full/read_counts.csv")
-filenames = '/Users/gerbix/Documents/vikas/NIPT/31119_download/figure_2_final/121R04_D01_CFFv1_NA0144.final.bam.results.txt'
+filenames = '/Volumes/Seagate8Tb1/nipt/bams/bams_for_vikas/3P13_E02_CFFv1_NB0015.final.bam.read_length_counts.txt'
 plotslist<-c()
 
 
@@ -73,11 +73,11 @@ ggsave(plot = human_plot, 'Resequenced_human_fragment_length.pdf')
 
 
 ###hhv6 isizes
-hhv_6_combined<-read.csv('/Users/gerbix/Documents/vikas/NIPT/31119_download/hhv6/human_121r04_compare/hhv_6_isizes.csv')
+hhv_6_combined<-read.csv('/Users/gerbix/Documents/vikas/NIPT/31119_download/figure_2_final/71719/hhv6_isizes_all.csv')
 
 
 
-plot<-ggplot(combineddf, aes( x=combineddf$length, y= combineddf$percent)) + 
+plot<-ggplot(hhv_6_combined, aes( x=hhv_6_combined$length, y= hhv_6_combined$percent)) + 
   geom_histogram(binwidth = 5, aes(fill = combineddf$sample, y=(100 * ..count../sum(..count..)))) + 
   geom_line(data = , aes(x = A, y = B), col = "red") +
   xlim(0,500) + 
@@ -91,7 +91,7 @@ plot
 
 
 
-hhv6_ks_test<-ks.test(human_isize_expanded,hhv_6_combined$occurences)
+hhv6_ks_test<-ks.test(human_isize_expanded,hhv_6_combined$lengthlist)
 hhv6_ks_test
 
 

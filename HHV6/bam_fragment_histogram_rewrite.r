@@ -97,8 +97,7 @@ combined_expanded$sample_trimmed<-strsplit(as.character(combined_expanded$sample
 
 
 plot<-ggplot(combined_expanded, aes( x=combined_expanded$lengthlist)) + 
-  geom_histogram(binwidth = 5, aes(fill = combined_expanded$sample_trimmed, y=(100 * ..count../sum(..count..)))) + 
-  
+  geom_histogram(binwidth = 5, aes(fill = combined_expanded$samplelist, y=(100 * ..count../sum(..count..)))) + 
   #geom_histogram(binwidth = 5, aes(fill=combineddf$sample)) + 
   #  geom_histogram(binwidth = 5) +
   #geom_vline(xintercept = median(combineddf$length)) +
@@ -106,14 +105,40 @@ plot<-ggplot(combined_expanded, aes( x=combined_expanded$lengthlist)) +
   ylab('percent')+
   xlab('length')+
   labs(colour="file") +
-  theme_classic() + 
-  theme(legend.position="bottom")
-
+  theme_classic() +
+  theme(legend.position = 'none') 
+  #theme(legend.position="bottom")
 plot
 
+ggsave(plot=plot, 'hhv6_isizes_stacked_no_legend.pdf', height = 3, width = 3)
 
 
+low_cluster<-c('99P03_C01','120R22_F03','104P04_D01','98P11','97P10_B02','93R20_D03')
 
+combined_expanded$cluster<-"High cluster"
+for(i in 1:nrow(combined_expanded)){ 
+  if(grepl(paste(low_cluster,collapse="|"),combined_expanded$samplelist[i])){ 
+    combined_expanded$cluster[i]<-"Low cluster"
+    }
+  }
+
+plot<-ggplot(combined_expanded, aes( x=combined_expanded$lengthlist)) + 
+  geom_histogram(binwidth = 5, aes(fill = combined_expanded$cluster, y=(100 * ..count../sum(..count..)))) + 
+  scale_fill_manual(values=c("orangered", "royalblue2")) + 
+  #geom_histogram(binwidth = 5, aes(fill=combineddf$sample)) + 
+  #  geom_histogram(binwidth = 5) +
+  #geom_vline(xintercept = median(combineddf$length)) +
+  xlim(0,500) + 
+  ylab('percent')+
+  xlab('length')+
+  labs(colour="file") +
+  theme_classic() +
+  theme(legend.position = 'bottom') 
+#theme(legend.position="bottom")
+plot
+ggsave(plot=plot, 'hhv6_isizes_by_cluster.pdf', height = 3, width = 3)
+
+write.csv(combined_expanded, 'hhv6_isizes_all.csv')
 
 
 
