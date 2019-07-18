@@ -5,7 +5,7 @@ library(Biostrings)
 library(seqinr)
 library(ggplot2)
 
-setwd('/Volumes/Seagate8Tb1/nipt/bams/bams_for_vikas/')
+setwd('/Volumes/Seagate8Tb1/nipt/bams/bams_for_vikas/partial')
 read_counts <- read.csv("~/Documents/vikas/NIPT/clip_removed/cmv_full/read_counts.csv")
 filenames = list.files(pattern = '*.bam.results.txt$')
 plotslist<-c()
@@ -86,7 +86,7 @@ plot<-ggplot(combineddf, aes( x=combineddf$length, y = combineddf$occurences, co
   #annotate("text", x = 400, y = max(histo$occurences)-5, label =  paste0('mean=', mean(combineddf$length))) + 
   #annotate("text", x = 400, y = max(histo$occurences)-7, label =  paste0('median=', median(combineddf$length)))
 plot
-ggsave('30219_revised_mean_median_human_bam_fragments.pdf', plot = last_plot())
+ ggsave('30219_revised_mean_median_human_bam_fragments.pdf', plot = last_plot())
 
 #calculating mean human read length
 temp_sum<-0
@@ -181,11 +181,11 @@ rpkm_plot
 #############################
 #####HHV-6 positive files######
 #############################
-setwd('/Users/gerbix/Documents/vikas/NIPT/31119_download/hhv6/host_filtered_hhv6/fastqs/paired/bams')
+setwd('/Users/gerbix/Documents/vikas/NIPT/31119_download/hhv6/host_filtered_hhv6/bams')
 system('$PWD')
 read_counts <- read.csv("/Users/gerbix/Documents/vikas/NIPT/31119_download/hhv6/read_counts_all.csv")
 system("for i in *.bam ; do echo processing $i ; samtools view -@ 8 $i | awk '{print $9}' | sort | uniq -c > $i.results.txt ; done")
-system('')
+#system('')
 filenames = list.files(pattern = '*.bam.results.txt$')
 plotslist<-c()
 
@@ -321,21 +321,38 @@ for (i in 1:length(read_counts$sample)){
   }
 }
 
+combineddf$percent<-0
+for(i in 1:nrow(combineddf)){ 
+  print(i)
+  for(j in 1:nrow(frequencies)){ 
+    if(combineddf$length[i] == frequencies$Var1[j]){ 
+      combineddf$percent[i] <- frequencies$percent[j]
+      }
+    }
+  }
 
 
-plot<-ggplot(combineddf, aes( x=combineddf$length)) + 
-  geom_histogram(binwidth = 5, aes(fill=combineddf$sample)) + 
+plot<-ggplot(combineddf, aes( x=combineddf$length, y= combineddf$percent)) + 
+  geom_histogram(binwidth = 5, aes(fill = combineddf$sample, y=(100 * ..count../sum(..count..)))) + 
+
+  #geom_histogram(binwidth = 5, aes(fill=combineddf$sample)) + 
 #  geom_histogram(binwidth = 5) +
-  geom_vline(xintercept = median(combineddf$length)) +
+  #geom_vline(xintercept = median(combineddf$length)) +
   xlim(0,500) + 
-  ylab('occurences')+
+  ylab('percent')+
   xlab('length')+
   labs(colour="file") +
   theme_classic() + 
   theme(legend.position="bottom")
 
 plot
+ggsave(plot = plot, 'hhv6_isizes_stacked.pdf', width = 8.5, height = 11)
 #ggsave('all_cmv_positives_average_length.pdf',plot, height = 3, width = 3,useDingbats = FALSE)
+
+write.csv(combined,'hhv_6_isizes.csv')
+
+
+
 
 
 hhv6_low_cluster<-c('98P11_C02_CFFv1_NB0120','93R20_D03_CFFv1_NA0087','97P10_B02_CFFv1_NB0119','99P03_C01_CFFv1_NB0121','120R22_F03_CFFv1_NA0137','104P04_D01_CFFv1_NA0266')
@@ -345,7 +362,6 @@ combineddf$cluster<-'high cluster'
 for(i in 1:nrow(combineddf)){ 
   for(j in 1:length(hhv6_low_cluster)){ 
     if(hhv6_low_cluster[j] %in% combineddf$sample[i]) { 
-      print('ok')
       combineddf$cluster[i]<-'low cluster'
       }
     }

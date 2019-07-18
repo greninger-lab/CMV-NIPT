@@ -99,20 +99,39 @@ fit1 <- lm(data$percent ~  data$`CMv_quantity/ml_plasma`)
 
 #coverage graph: 
 verified_reads<-read.csv('/Users/gerbix/Documents/vikas/NIPT/31119_download/34_mismatches/blast_positive_sequence_info.csv')
+ReadFasta<-function(file) {
+  # Read the file line by line
+  fasta<-readLines(file)
+  # Identify header lines
+  ind<-grep(">", fasta)
+  # Identify the sequence lines
+  s<-data.frame(ind=ind, from=ind+1, to=c((ind-1)[-1], length(fasta)))
+  # Process sequence lines
+  seqs<-rep(NA, length(ind))
+  for(i in 1:length(ind)) {
+    seqs[i]<-paste(fasta[s$from[i]:s$to[i]], collapse="")
+  }
+  # Create a data frame 
+  DF<-data.frame(name=gsub(">", "", fasta[ind]), sequence=seqs)
+  # Return the data frame as a result object from the function
+  return(DF)
+}
 
+verified_reads<-ReadFasta('/Users/gerbix/Documents/vikas/NIPT/31119_download/resequenced/resequenced_repeatmasked_7_removed.fasta')
 bam_files<-list.files('/Users/gerbix/Documents/vikas/NIPT/31119_download/cmv_download/bams', pattern = '*.bam$')
 
-verified_reads$nameslist<-as.character(verified_reads$nameslist)
-verified_reads$read_id<-NA
-verified_reads$sample_id<-NA
+verified_reads$name<-as.character(verified_reads$name)
+#verified_reads$read_id<-NA
+#verified_reads$sample_id<-NA
 
-for(i in 1:nrow(verified_reads)){ 
-  verified_reads$read_id[i]<-strsplit(verified_reads$nameslist[i],'-')[[1]][2]
-  verified_reads$sample_id[i]<-strsplit(verified_reads$nameslist[i],'[.]')[[1]][1]
+verified_reads$base_read_id <- NA
+for(i in 1:nrow(verified_reads)){
+  verified_reads$base_read_id[i]<-strsplit(verified_reads$name[i],'/')[[1]][1]
+  #verified_reads$sample_id[i]<-strsplit(verified_reads$nameslist[i],'[.]')[[1]][1]
   }
 
 verified_reads$pos<-NA
-unique_samples<-unique(verified_reads$sample_id)
+unique_samples<-unique(verified_reads$base_read_id)
 for(i in 1:length(unique_samples)){ 
   progress(i, length(unique_samples))
   tempbamname<-paste0('/Users/gerbix/Documents/vikas/NIPT/31119_download/cmv_download/bams/',unique_samples[i],'.sam.bam')
