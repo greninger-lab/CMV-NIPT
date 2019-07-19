@@ -185,12 +185,13 @@ all_combined<-rbind(human_isizes_all, hhv6_isizes_all)
 
 cum_frequency<-ggplot(all_combined, aes(x = all_combined$lengthlist, color = all_combined$cluster)) + 
   theme_classic() +  
+  xlim(0,500) + 
   theme(legend.position='none') + 
   xlab('Insert size') + 
   ylab ('Cumulative frequency') + 
   stat_ecdf(geom = 'step', size  =1 ) 
 cum_frequency
-
+ggsave(cum_frequency, 'cumulative_frequency_500_max.pdf', height = 3 , width = 3)
 
 
 

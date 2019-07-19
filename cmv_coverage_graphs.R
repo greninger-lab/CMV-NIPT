@@ -113,7 +113,7 @@ for(i in 1:length(positions_with_read_ids$positions_list)){
 all_positions_covered_df<-data.frame(all_positions_covered, all_positions_covered_readid)
 
 coverage_plot<-ggplot(all_positions_covered_df, aes(x = all_positions_covered_df$all_positions_covered)) + 
-  geom_freqpoly(bins = 10000) + 
+  geom_freqpoly( bins = 50) + 
   theme_classic() 
 coverage_plot
 
@@ -122,13 +122,13 @@ ggsave('cmv_coverage_plot.pdf', coverage_plot,width = 3, height = 3)
 coverage_freq_table<-data.frame(table(all_positions_covered_df$all_positions_covered))
 
 
-positions_covered_by_freq<-ggplot(coverage_freq_table, aes(x = coverage_freq_table$Var1, y = coverage_freq_table$Freq)) + 
-  geom_smooth() + 
+positions_covered_by_freq<-ggplot(coverage_freq_table, aes(x = coverage_freq_table$Var1, y = coverage_freq_table$Freq, group = 1 )) + 
+  geom_point() + 
   theme_classic() 
 positions_covered_by_freq
 
 
-coverage_plot<-ggplot(coverage_freq_table, aes(x = coverage_freq_table$Var1, y = coverage_freq_table$Freq)) + 
+coverage_plot<-ggplot(coverage_freq_table, aes(x = coverage_freq_table$Var1, y = coverage_freq_table$Freq, group = 1 )) + 
   geom_freqpoly(bins = 50, stat = 'identity') + 
   theme_classic() 
 coverage_plot
