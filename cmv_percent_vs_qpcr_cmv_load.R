@@ -71,43 +71,6 @@ fit1 <- lm(data$percent ~  data$CMv_quantity.ml_plasma)
 
 
 
-#coverage graph: 
-verified_reads<-read.csv('/Users/gerbix/Documents/vikas/NIPT/31119_download/blast_positive_sequence_info.csv')
-
-bam_files<-list.files('/Users/gerbix/Documents/vikas/NIPT/31119_download/cmv_download/bams', pattern = '*.bam$')
-
-verified_reads$nameslist<-as.character(verified_reads$nameslist)
-verified_reads$read_id<-NA
-verified_reads$sample_id<-NA
-
-for(i in 1:nrow(verified_reads)){ 
-  verified_reads$read_id[i]<-strsplit(verified_reads$nameslist[i],'-')[[1]][2]
-  verified_reads$sample_id[i]<-strsplit(verified_reads$nameslist[i],'[.]')[[1]][1]
-  }
-
-verified_reads$pos<-NA
-unique_samples<-unique(verified_reads$sample_id)
-for(i in 1:length(unique_samples)){ 
-  progress(i, length(unique_samples))
-  tempbamname<-paste0('/Users/gerbix/Documents/vikas/NIPT/31119_download/cmv_download/bams/',unique_samples[i],'.sam.bam')
-  #print(tempbamname)
-  tempbam<-scanBam(tempbamname)
-  for(j in 1:nrow(verified_reads)){ 
-    if(verified_reads$sample_id[j] == unique_samples[i]){ 
-      read_index<-which(grepl(verified_reads$read_id[j],tempbam[[1]]$qname))
-      verified_reads$pos[j]<-tempbam[[1]]$pos[read_index][1]
-      #print(tempbam[[1]]$pos[read_index])
-      }
-    }
-  }
-
-coverage_plot<-ggplot(verified_reads, aes(x = verified_reads$pos)) + 
-  geom_freqpoly(binwidth = 5) + 
-  theme_classic() 
-coverage_plot
-
-ggsave('cmv_coverage_plot.pdf', coverage_plot,width = 3, height = 3)
-
 
 
 
