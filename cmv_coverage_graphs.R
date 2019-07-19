@@ -33,10 +33,10 @@ for(i in 1:nrow(resequenced_verified_reads)){
 }
 
 #shouldn't be making this unique values, pairs count as coverage 
-#to_remove<- which(duplicated(as.character(resequenced_verified_reads$name_trimmed)))
-#unique_resequenced_verified_reads<-resequenced_verified_reads[-to_remove,]
+to_remove<- which(duplicated(as.character(resequenced_verified_reads$name_trimmed)))
+unique_resequenced_verified_reads<-resequenced_verified_reads[-to_remove,]
 
-resequenced_bam_names<-resequenced_bam[[1]]$qname
+#resequenced_bam_names<-resequenced_bam[[1]]$qname
 # resequenced_bam_names_trimmed<-c()
 # for(i in 1:length(resequenced_bam_names)){ 
 #   progress(i,nrow(verified_reads))
@@ -45,35 +45,71 @@ resequenced_bam_names<-resequenced_bam[[1]]$qname
 # 
 
 resequenced_verified_reads$pos<-NA
-for(i in 1:length(resequenced_verified_reads$name_trimmed)){
-  index<- which(as.character(resequenced_verified_reads$name_trimmed[i]) == resequenced_bam[[1]]$qname)
-  if(resequenced_bam[[1]]$isize[index[1]] > 0 ){ 
-    resequenced_verified_reads$pos[i]<-resequenced_bam[[1]]$pos[index[1]]
-    }
-  
-  
+
+
+unique_resequenced_verified_reads$paired<-NA
+for(i in 1:nrow(unique_resequenced_verified_reads)){ 
+  tempindex<-which(as.character(unique_resequenced_verified_reads$name_trimmed[i]) == resequenced_bam[[1]]$qname)
+  if(is.na(tempindex[2])){ 
+    #print(index)
+    unique_resequenced_verified_reads$paired[i]<-FALSE
+  }
+  else{
+    print(tempindex)
+    unique_resequenced_verified_reads$paired[i]<-TRUE
+  }
 }
 
 
 
 
 
-for(i in 1:nrow(resequenced_verified_reads)){ 
-  resequenced_verified_reads$pos[i]<-resequenced_bam[[1]]$pos[match_indices[i]]
+positions_list<-c()
+read_id_list<-c()
+for(i in 1:length(unique_resequenced_verified_reads$name_trimmed)){
+  index<- which(as.character(unique_resequenced_verified_reads$name_trimmed[i]) == resequenced_bam[[1]]$qname)
+  if(unique_resequenced_verified_reads$paired[i]==FALSE){ 
+#  print((index))
+    positions_list<-append(positions_list,resequenced_bam[[1]]$pos[index])
+    read_id_list<-append(read_id_list,resequenced_bam[[1]]$qname[index])
   }
+  else{
+    #print(index)
+ # if(resequenced_bam[[1]]$isize[index[1]] > 0 ){ 
+    positions_list<-append(positions_list,resequenced_bam[[1]]$pos[index[1]])
+    read_id_list<-append(read_id_list,resequenced_bam[[1]]$qname[index[1]])
 
-all_positions_covered<-c()
-all_positions_covered_readid<-c()
+    positions_list<-append(positions_list,resequenced_bam[[1]]$pos[index[2]])
+    read_id_list<-append(read_id_list,resequenced_bam[[1]]$qname[index[2]])
+    
+  #}
+  }
+  
+}
 
-for(i in 1:length(resequenced_verified_reads$pos)){ 
+positions_with_read_ids<-data.frame(positions_list,read_id_list)
+
+
+
+# for(i in 1:nrow(resequenced_verified_reads)){ 
+#   resequenced_verified_reads$pos[i]<-resequenced_bam[[1]]$pos[match_indices[i]]
+#   }
+# 
+ all_positions_covered<-c()
+ all_positions_covered_readid<-c()
+
+for(i in 1:length(positions_with_read_ids$positions_list)){ 
   print(i)
   for(j in 1:36){
-    temp<-(resequenced_verified_reads$pos[i] + j)
+    temp<-(positions_with_read_ids$positions_list[i] + j)
   all_positions_covered<-append(all_positions_covered, temp)
-  all_positions_covered_readid<-append(all_positions_covered_readid, as.character(resequenced_verified_reads$name_trimmed[i]))
+  all_positions_covered_readid<-append(all_positions_covered_readid, as.character(positions_with_read_ids$read_id_list[i]))
     }
   }
 
+ 
+ 
+ 
 all_positions_covered_df<-data.frame(all_positions_covered, all_positions_covered_readid)
 
 coverage_plot<-ggplot(all_positions_covered_df, aes(x = all_positions_covered_df$all_positions_covered)) + 
