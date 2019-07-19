@@ -267,6 +267,7 @@ for(i in 1:nrow(combined)){
     }
 }
 combineddf<-data.frame(lengthlist,samplelist)
+
 colnames(combineddf)[1]<-'length'
 colnames(combineddf)[2]<-'sample'
 #read_counts$sample<-as.character(read_counts$sample)

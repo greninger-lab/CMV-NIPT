@@ -95,7 +95,8 @@ hhv6_ks_test<-ks.test(human_isize_expanded,hhv_6_combined$lengthlist)
 hhv6_ks_test
 
 
-hhv_6_isize<-combined$length
+hhv_6_isize<-data.frame(hhv_6_combined$lengthlist)
+colnames(hhv_6_isize)[1]<-'length'
 hhv_6_isize$type<-'hhv6'
 
 human_isize<-data.frame(human_isize_expanded)
@@ -106,7 +107,7 @@ human_hhv6_combined<-rbind(human_isize,hhv_6_isize)
 
 
 
-cum_frequency<-ggplot(subsampled_df, aes(x = subsampled_df$isizes, color = subsampled_df$type)) + 
+cum_frequency<-ggplot(human_hhv6_combined, aes(x = human_hhv6_combined$length, color = human_hhv6_combined$type)) + 
   theme_classic() +  
   theme(legend.position='none') + 
   xlab('Insert size') + 
@@ -121,7 +122,13 @@ plot(ecdf(cmv))
 
 
 
+for(i in 1:nrow(human_hhv6_combined)){ 
+  if(human_hhv6_combined$type=='H')
+  }
 
+
+
+###########
 
 uniques<-unique(combineddf$sample)
 
@@ -154,5 +161,38 @@ plot(ecdf(lowclusteronly$length), add = TRUE, col = 3 )
 
 
 ks.test(human_isize_expanded, combineddf$length)
+
+
+
+
+hhv6_isizes_all<-read.csv('/Users/gerbix/Documents/vikas/NIPT/31119_download/figure_2_final/71719/hhv6_isizes_all.csv')
+
+
+
+
+
+
+
+human_isizes_all<-data.frame(human_isize$length)
+colnames(human_isizes_all)[1]<-'lengthlist'
+human_isizes_all$X<-NA
+human_isizes_all$samplelist<-'Human'
+human_isizes_all$sample_trimmed<-'Human'
+human_isizes_all$cluster<-'Human'
+
+all_combined<-rbind(human_isizes_all, hhv6_isizes_all)
+
+
+cum_frequency<-ggplot(all_combined, aes(x = all_combined$lengthlist, color = all_combined$cluster)) + 
+  theme_classic() +  
+  theme(legend.position='none') + 
+  xlab('Insert size') + 
+  ylab ('Cumulative frequency') + 
+  stat_ecdf(geom = 'step', size  =1 ) 
+cum_frequency
+
+
+
+
 
 
