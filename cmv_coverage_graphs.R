@@ -44,35 +44,40 @@ resequenced_bam_names<-resequenced_bam[[1]]$qname
 # }
 # 
 
-match_indices<-c()
+resequenced_verified_reads$pos<-NA
+for(i in 1:length(resequenced_verified_reads$name_trimmed)){
+  index<- which(as.character(resequenced_verified_reads$name_trimmed[i]) == resequenced_bam[[1]]$qname)
+  if(resequenced_bam[[1]]$isize[index[1]] > 0 ){ 
+    resequenced_verified_reads$pos[i]<-resequenced_bam[[1]]$pos[index[1]]
+    }
+  
+  
+}
+
+
+
+
+
 for(i in 1:nrow(resequenced_verified_reads)){ 
-  match_indices<-append(match_indices, which(as.character(resequenced_verified_reads$name_trimmed[i]) == resequenced_bam_names))
-  }
-
-
-unique_resequenced_verified_reads$pos<-NA
-
-for(i in 1:nrow(unique_resequenced_verified_reads)){ 
-  unique_resequenced_verified_reads$pos[i]<-resequenced_bam[[1]]$pos[match_indices[i]]
+  resequenced_verified_reads$pos[i]<-resequenced_bam[[1]]$pos[match_indices[i]]
   }
 
 all_positions_covered<-c()
 all_positions_covered_readid<-c()
 
-for(i in 1:length(unique_resequenced_verified_reads$pos)){ 
+for(i in 1:length(resequenced_verified_reads$pos)){ 
   print(i)
   for(j in 1:36){
-    temp<-(unique_resequenced_verified_reads$pos[i] + j)
+    temp<-(resequenced_verified_reads$pos[i] + j)
   all_positions_covered<-append(all_positions_covered, temp)
-  all_positions_covered_readid<-append(all_positions_covered_readid, as.character(unique_resequenced_verified_reads$name_trimmed[i]))
-  
+  all_positions_covered_readid<-append(all_positions_covered_readid, as.character(resequenced_verified_reads$name_trimmed[i]))
     }
   }
 
 all_positions_covered_df<-data.frame(all_positions_covered, all_positions_covered_readid)
 
 coverage_plot<-ggplot(all_positions_covered_df, aes(x = all_positions_covered_df$all_positions_covered)) + 
-  geom_freqpoly(bins = 70) + 
+  geom_freqpoly(bins = 50) + 
   theme_classic() 
 coverage_plot
 
