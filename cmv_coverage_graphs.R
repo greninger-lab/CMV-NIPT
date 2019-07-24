@@ -123,8 +123,9 @@ coverage_freq_table<-data.frame(table(all_positions_covered_df$all_positions_cov
 
 
 positions_covered_by_freq<-ggplot(coverage_freq_table, aes(x = coverage_freq_table$Var1, y = coverage_freq_table$Freq, group = 1 )) + 
-  geom_point() + 
+  geom_line() + 
   theme_classic() 
+
 positions_covered_by_freq
 
 
@@ -135,6 +136,15 @@ coverage_plot
 
 #mapping = aes(x = x, y = y), stat = "identity"
 
+ggplot(all_positions_covered_df) + 
+  geom_freqpoly(aes(x = all_positions_covered_df$all_positions_covered), binwidth = 1) + 
+  xlab('position') + 
+  ylab('depth') + 
+  scale_x_continuous(expand = c(0, 0), limits = c(0,235000), breaks = c(0,47000,94000,141000,188000,235000)) + 
+  theme_classic() +
+  theme(axis.text.x = element_text(angle = 80, hjust = 1.5)) + 
+  scale_y_continuous(expand = c(0, 0)) 
+  #xlim(0,250000) + 
 
 
 
