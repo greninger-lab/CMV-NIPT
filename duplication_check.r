@@ -135,4 +135,4 @@ ggplot(all_positions_covered_df) +
   scale_y_continuous(expand = c(0, 0)) 
 #xlim(0,250000) + 
 
-
+write.csv(positions_with_read_ids,'positions_with_read_ids.csv')

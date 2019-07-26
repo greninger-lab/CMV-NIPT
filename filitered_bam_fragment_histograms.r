@@ -199,6 +199,7 @@ blast_hits_file<-read.csv('/Users/gerbix/Documents/vikas/NIPT/31119_download/34_
 r04_resequenced_BamFile<-scanBam('/Users/gerbix/Documents/vikas/NIPT/31119_download/34_mismatches/resequenced_sample/resequenced_local_cmv_aligned.bam')
 plotslist<-c()
 
+duplicated_file_data<-read.csv('positions_with_read_ids.csv')
 
 blast_hits_file$full_ID<-as.character(blast_hits_file$full_ID)
 for( i in 1:nrow(blast_hits_file)){
