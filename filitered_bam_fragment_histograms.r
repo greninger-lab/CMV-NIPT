@@ -197,9 +197,9 @@ ggsave('121R04_original.pdf', r04_original_plot)
 setwd('/Users/gerbix/Documents/vikas/NIPT/31119_download/34_mismatches/resequenced_sample')
 blast_hits_file<-read.csv('/Users/gerbix/Documents/vikas/NIPT/31119_download/34_mismatches/resequenced_sample/resequenced_cmv_vs_full_nt.txt_blast_hits.csv', header = FALSE, col.names = c('full_ID','count','x'))
 r04_resequenced_BamFile<-scanBam('/Users/gerbix/Documents/vikas/NIPT/31119_download/34_mismatches/resequenced_sample/resequenced_local_cmv_aligned.bam')
+duplicated_file_data<-read.csv('positions_with_read_ids.csv')
 plotslist<-c()
 
-duplicated_file_data<-read.csv('positions_with_read_ids.csv')
 
 blast_hits_file$full_ID<-as.character(blast_hits_file$full_ID)
 for( i in 1:nrow(blast_hits_file)){
@@ -254,6 +254,26 @@ ggsave('121r04_resequenced_plot.pdf',r04_resequenced_plot)
 write.csv(combined,'121r04_resequenced.csv')
 
 
+not_unique<-which(duplicated(duplicated_file_data$positions_list))
+duplicated_file_data<-duplicated_file_data[-not_unique,]
+#duplicated_file_data<-duplicated_file_data[complete.cases(duplicated_file_data$positions_list),]
+
+duplicates_to_keep<-c()
+#non_paired<-duplicated_file_data$read_id_list[duplicated_file_data$paired==TRUE]
+for(i in 1:nrow(duplicated_file_data)){ 
+  if(duplicated_file_data$paired[i]==TRUE){ 
+  for(j in 1:nrow(r04_resequenced_combined)){ 
+    if(grepl(as.character(duplicated_file_data$read_id_list[i]), as.character(r04_resequenced_combined$read_id[j]))){ 
+      #print(as.character(duplicated_file_data$read_id_list[i]))
+      #print(as.character(r04_resequenced_combined$read_id[j]))
+      duplicates_to_keep<-append(duplicates_to_keep, j)
+        }
+      }
+    }
+  }
+
+r04_resequenced_combined<-r04_resequenced_combined[duplicates_to_keep,]
+
 
 
 r04_isizes<-r04_resequenced_combined$isize
@@ -282,7 +302,7 @@ freq_df$freq<-as.numeric(freq_df$freq)
 head_freq_df<-freq_df[1:100000,]
 
 ####
-human_freq_df<-freq_df[freq_df$sample=='Human',]
+#human_freq_df<-freq_df[freq_df$sample=='Human',]
 percent_plot<-ggplot(human_freq_df, aes(x= human_freq_df$isize, y=human_freq_df$percent, color = human_freq_df$sample)) + 
   geom_point() + 
   xlab('Fragment length') + 
@@ -310,6 +330,7 @@ percent_plot<-ggplot(head_freq_df, aes(x= head_freq_df$isize, y=head_freq_df$per
   xlab('Fragment length') + 
   ylab('percent of mapped reads in the sample') + 
   xlim(c(50,400)) + 
+  geom_vline(xintercept = 167) +
   theme_classic()
 percent_plot
 
@@ -319,7 +340,8 @@ percent_plot<-ggplot(freq_df, aes(x= freq_df$isize, y=freq_df$percent, color = f
   geom_line() + 
   xlab('Fragment length') + 
   ylab('% of mapped reads in the sample') +
-  xlim(c(0,500))+ 
+  xlim(c(0,500))+
+  geom_vline(xintercept = 168) + 
   theme_classic()
 percent_plot
 
@@ -412,7 +434,7 @@ fktest_graph<-ggplot(fk_df, aes(x = fk_df$tests)) +
   theme_classic() + 
   theme(axisw.text.x = element_text(angle = 90, hjust = 1)) 
 # ylim(c(0,8))
-fktest_graph f
+fktest_graph 
 ggsave(plot =fktest_graph, 'insert_size_variance_distribution.pdf')
 
 
