@@ -121,49 +121,49 @@ CMV_matched<-CMV_matched[CMV_matched$isize<500,]
 
 CMV_matched<-CMV_matched[complete.cases(CMV_matched$isize),]
 
-#removing duplicates 
-#file contains reads that are not duplicated in CMV 
-paired_file_data<-read.csv('/Users/gerbix/Documents/vikas/NIPT/31119_download/34_mismatches/resequenced_sample/positions_with_read_ids.csv')
-not_unique<-which(duplicated(paired_file_data$positions_list))
-paired_file_data<-paired_file_data[-not_unique,]
-#duplicated_file_data<-duplicated_file_data[complete.cases(duplicated_file_data$positions_list),]
+# #removing duplicates 
+# #file contains reads that are not duplicated in CMV 
+# paired_file_data<-read.csv('/Users/gerbix/Documents/vikas/NIPT/31119_download/34_mismatches/resequenced_sample/positions_with_read_ids.csv')
+# not_unique<-which(duplicated(paired_file_data$positions_list))
+# paired_file_data<-paired_file_data[-not_unique,]
+# #duplicated_file_data<-duplicated_file_data[complete.cases(duplicated_file_data$positions_list),]
+# 
+# dropped_duplicates<-paired_file_data[not_unique,]
+# dropped_duplicates<-dropped_duplicates[dropped_duplicates$paired==TRUE,]
+# dropped_duplicates$insert_size<-NA
+# for(i in 1:nrow(dropped_duplicates)){ 
+#   tempindex<-which(dropped_duplicates$read_id_list[i] == temp_bam[[1]]$qname)
+#   #print(tempindex[1])
+#   dropped_duplicates$insert_size[i]<-temp_bam[[1]]$isize[tempindex[1]]
+#   }
+# dropped_duplicates$insert_size<-abs(dropped_duplicates$insert_size)
+# 
+# 
+# dropped_plot<-ggplot(dropped_duplicates, aes(x = dropped_duplicates$insert_size)) + 
+#   geom_histogram(binwidth = 5) + 
+#   xlab('insert sizee') + 
+#   ylab('count') + 
+#   theme_classic()
+# dropped_plot
+# 
+# 
+# duplicates_to_keep<-c()
+# #non_paired<-duplicated_file_data$read_id_list[duplicated_file_data$paired==TRUE]
+# for(i in 1:nrow(paired_file_data)){ 
+#   print(i)
+#   if(paired_file_data$paired[i]==TRUE){ 
+#     for(j in 1:nrow(CMV_matched)){ 
+#       if(grepl(as.character(paired_file_data$read_id_list[i]), as.character(CMV_matched$read_id[j]))){ 
+#         #print(as.character(duplicated_file_data$read_id_list[i]))
+#         #print(as.character(r04_resequenced_combined$read_id[j]))
+#         duplicates_to_keep<-append(duplicates_to_keep, j)
+#       }
+#     }
+#   }
+# }
+# unique_duplicates_to_keep<-unique(duplicates_to_keep)
 
-dropped_duplicates<-paired_file_data[not_unique,]
-dropped_duplicates<-dropped_duplicates[dropped_duplicates$paired==TRUE,]
-dropped_duplicates$insert_size<-NA
-for(i in 1:nrow(dropped_duplicates)){ 
-  tempindex<-which(dropped_duplicates$read_id_list[i] == temp_bam[[1]]$qname)
-  #print(tempindex[1])
-  dropped_duplicates$insert_size[i]<-temp_bam[[1]]$isize[tempindex[1]]
-  }
-dropped_duplicates$insert_size<-abs(dropped_duplicates$insert_size)
-
-
-dropped_plot<-ggplot(dropped_duplicates, aes(x = dropped_duplicates$insert_size)) + 
-  geom_histogram(binwidth = 5) + 
-  xlab('insert sizee') + 
-  ylab('count') + 
-  theme_classic()
-dropped_plot
-
-
-duplicates_to_keep<-c()
-#non_paired<-duplicated_file_data$read_id_list[duplicated_file_data$paired==TRUE]
-for(i in 1:nrow(paired_file_data)){ 
-  print(i)
-  if(paired_file_data$paired[i]==TRUE){ 
-    for(j in 1:nrow(CMV_matched)){ 
-      if(grepl(as.character(paired_file_data$read_id_list[i]), as.character(CMV_matched$read_id[j]))){ 
-        #print(as.character(duplicated_file_data$read_id_list[i]))
-        #print(as.character(r04_resequenced_combined$read_id[j]))
-        duplicates_to_keep<-append(duplicates_to_keep, j)
-      }
-    }
-  }
-}
-unique_duplicates_to_keep<-unique(duplicates_to_keep)
-
-CMV_matched<-CMV_matched[unique_duplicates_to_keep,]
+#CMV_matched<-CMV_matched[unique_duplicates_to_keep,]
 
 CMV_frequencies<-data.frame(table(CMV_matched$isize))
 colnames(CMV_frequencies)<-(c('isize','freq'))
