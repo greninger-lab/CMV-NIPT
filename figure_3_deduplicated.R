@@ -51,7 +51,7 @@ human_median<-median(as.numeric(as.character(human_isize_expanded_below250)))
 human_frequencies$isize<-as.numeric(as.character(human_frequencies$isize))
 x<-human_frequencies[order(human_frequencies$isize),]
 
-x<-x[x$isize < 250 ,]
+x<-x[x$isize < 500 ,]
 
 count = 1 
 sum = 0 
@@ -131,20 +131,6 @@ CMV_isize_exanded<-rep(CMV_frequencies$isize, CMV_frequencies$freq)
 CMV_isize_exanded<-CMV_isize_exanded[as.numeric(as.character(CMV_isize_exanded)) < 500]
 CMV_median<-median(as.numeric(as.character(CMV_isize_exanded)))
 
-
-x<-CMV_frequencies[order(CMV_frequencies$isize),]
-
-x<-x[as.numeric(x$isize) < 250 ,]
-
-count = 1 
-sum = 0 
-x$percent<- (100 * x$freq)/ sum(x$freq)
-while( sum < 50) { 
-  print(sum)
-  print(as.numeric(x$isize[count]))
-  sum = sum +  x$percent[count]
-  count = count + 1 
-}
 
 
 CMV_plot<-ggplot(CMV_frequencies, aes( x = as.numeric(CMV_frequencies$isize) , y = CMV_frequencies$percent)) + 
