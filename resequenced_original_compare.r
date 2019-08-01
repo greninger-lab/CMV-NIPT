@@ -45,3 +45,22 @@ duplicate_reads_plot<-ggplot(duplicate_reads, aes( x = duplicate_reads$isize , y
 duplicate_reads_plot
 ggsave(plot = duplicate_reads_plot, 'duplicates_overlayed.pdf', height = 8, width = 8)
 
+
+
+
+duplicate_vs_non_duplicate_resequenced<-rbind(resequenced_data[resequenced_data$run=='resequenced' & resequenced_data$type=='extracted_duplicates',], resequenced_data[resequenced_data$run=='resequenced' & resequenced_data$type=='deduplicated',])
+
+duplicate_vs_non_duplicate_resequenced_plot<-ggplot(duplicate_vs_non_duplicate_resequenced, aes( x = duplicate_vs_non_duplicate_resequenced$isize , y = duplicate_vs_non_duplicate_resequenced$percent, color = duplicate_vs_non_duplicate_resequenced$type)) + 
+  geom_vline(xintercept = 168) + 
+  theme_classic() + 
+  xlim(c(0,500)) +
+  xlab('insert size') + 
+  ylab('percent')  +
+  geom_line(aes(alpha=0.4)) 
+duplicate_vs_non_duplicate_resequenced_plot
+
+
+
+
+
+
