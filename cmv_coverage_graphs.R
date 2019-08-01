@@ -24,7 +24,7 @@ resequenced_verified_reads<-ReadFasta('/Users/gerbix/Documents/vikas/NIPT/31119_
 
 #coverage graph: 
 
-resequenced_bam<-scanBam('/Users/gerbix/Documents/vikas/NIPT/31119_download/resequenced/resequenced.bam.filtered.sam.bam')
+resequenced_bam<-scanBam('/Users/gerbix/Documents/vikas/NIPT/31119_download/resequenced/deduplicating/cmv_duplicates_removed.bam')
 
 resequenced_verified_reads$name_trimmed<-NA
 for(i in 1:nrow(resequenced_verified_reads)){ 
