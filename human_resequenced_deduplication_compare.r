@@ -3,7 +3,7 @@ library(ggplot2)
 
 
 setwd('/Users/gerbix/Documents/vikas/NIPT/31119_download/resequenced/deduplicating')
-deduplicated_human = '/Users/gerbix/Documents/vikas/NIPT/31119_download/resequenced/deduplicating/121r04_original_human_duplicates_removed_read_lengths_count.txt'
+deduplicated_human = '/Volumes/Seagate8Tb1/resquenced_121R04_D01_CFFv1_NB0222/aligned_to_hg38/duplicates_removed_read_lengths.txt'
 plotslist<-c()
 
 
@@ -61,7 +61,7 @@ while( sum < 50) {
 
 
 human_plot<-ggplot(deduplicated_human_frequencies, aes( x = deduplicated_human_frequencies$isize , y = deduplicated_human_frequencies$percent)) + 
-  geom_vline(xintercept = human_median) + 
+  geom_vline(xintercept = 168) + 
   theme_classic() + 
   xlim(c(0,500)) +
   xlab('insert size') + 
@@ -81,7 +81,7 @@ ggsave(plot = human_plot, 'Resequenced_human_fragment_length.pdf')
 #Human with duplicates
 
 setwd('/Users/gerbix/Documents/vikas/NIPT/31119_download/resequenced/deduplicating')
-human_with_duplicates = '/Users/gerbix/Documents/vikas/NIPT/31119_download/figure_2_final/121R04_D01_CFFv1_NA0144.final.bam.results.txt'
+human_with_duplicates = '/Volumes/Seagate8Tb1/resquenced_121R04_D01_CFFv1_NB0222/aligned_to_hg38/read_lengths_duplicates_marked.txt'
 plotslist<-c()
 
 
@@ -139,7 +139,7 @@ while( sum < 50) {
 
 
 human_plot<-ggplot(human_with_duplicates, aes( x = human_with_duplicates$isize , y = human_with_duplicates$percent)) + 
-  geom_vline(xintercept = human_median) + 
+  geom_vline(xintercept = 168) + 
   theme_classic() + 
   xlim(c(0,500)) +
   xlab('insert size') + 
@@ -151,7 +151,7 @@ ggsave(plot = human_plot, 'Resequenced_human_fragment_length.pdf')
 
 
 ####only the removed duplicates
-extracted_duplicates<-'/Users/gerbix/Documents/vikas/NIPT/31119_download/resequenced/deduplicating/duplicates_read_lengths.txt'
+extracted_duplicates<-'/Volumes/Seagate8Tb1/resquenced_121R04_D01_CFFv1_NB0222/aligned_to_hg38/duplicates_only_read_lengths.txt'
 plotslist<-c()
 dflist<-c()
 statslist<-c()
@@ -207,7 +207,7 @@ while( sum < 50) {
 
 
 human_plot<-ggplot(extracted_duplicates, aes( x = extracted_duplicates$isize , y = extracted_duplicates$percent)) + 
-  geom_vline(xintercept = human_median) + 
+  geom_vline(xintercept = 168) + 
   theme_classic() + 
   xlim(c(0,500)) +
   xlab('insert size') + 
@@ -230,7 +230,7 @@ human_plot
 #deduplicated_human_frequencie$type<-'without duplicates'
 
 duplicated_deduplicated_combined<-rbind(deduplicated_human_frequencies, human_with_duplicates, extracted_duplicates)
-write.csv(duplicated_deduplicated_combined,'original_human_insert_sizes.csv')
+write.csv(duplicated_deduplicated_combined,'resequenced_human_insert_sizes.csv')
 
 duplication_distribution_plot<-ggplot(duplicated_deduplicated_combined, aes( x = duplicated_deduplicated_combined$isize , y = duplicated_deduplicated_combined$percent, color = duplicated_deduplicated_combined$type)) + 
   geom_vline(xintercept = 168) + 
@@ -238,7 +238,7 @@ duplication_distribution_plot<-ggplot(duplicated_deduplicated_combined, aes( x =
   xlim(c(0,500)) +
   xlab('insert size') + 
   ylab('percent')  +
-  geom_line() 
+  geom_line(aes(alpha=0.4)) 
 duplication_distribution_plot
 
 deduplicated_human_frequencies_plot<-ggplot(deduplicated_human_frequencies, aes( x = deduplicated_human_frequencies$isize , y = deduplicated_human_frequencies$percent, color = deduplicated_human_frequencies$type)) + 
@@ -312,6 +312,6 @@ duplication_distribution_histogram<-ggplot(expanded_combined, aes(x=expanded_com
   theme_classic() + 
   xlab('Insert sizes')
 
-duplication_distribution_histogram
+#duplication_distribution_histogram
 
 
