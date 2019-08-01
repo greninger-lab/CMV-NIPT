@@ -6,7 +6,7 @@ library(reshape2)
 
 setwd('/Users/gerbix/Documents/vikas/NIPT/31119_download/resequenced/deduplicating')
 #read_counts <- read.csv("~/Documents/vikas/NIPT/clip_removed/cmv_full/read_counts.csv")
-filenames = '/Users/gerbix/Documents/vikas/NIPT/31119_download/resequenced/deduplicating/121r04_original_human_duplicates_removed_read_lengths_count.txt'
+filenames = '/Volumes/Seagate8Tb1/resquenced_121R04_D01_CFFv1_NB0222/aligned_to_hg38/duplicates_removed_read_lengths.txt'
 plotslist<-c()
 
 
@@ -130,6 +130,21 @@ CMV_frequencies$type<-'CMV'
 CMV_isize_exanded<-rep(CMV_frequencies$isize, CMV_frequencies$freq) 
 CMV_isize_exanded<-CMV_isize_exanded[as.numeric(as.character(CMV_isize_exanded)) < 500]
 CMV_median<-median(as.numeric(as.character(CMV_isize_exanded)))
+
+
+x<-CMV_frequencies[order(CMV_frequencies$isize),]
+
+x<-x[as.numeric(x$isize) < 250 ,]
+
+count = 1 
+sum = 0 
+x$percent<- (100 * x$freq)/ sum(x$freq)
+while( sum < 50) { 
+  print(sum)
+  print(as.numeric(x$isize[count]))
+  sum = sum +  x$percent[count]
+  count = count + 1 
+}
 
 
 CMV_plot<-ggplot(CMV_frequencies, aes( x = as.numeric(CMV_frequencies$isize) , y = CMV_frequencies$percent)) + 
