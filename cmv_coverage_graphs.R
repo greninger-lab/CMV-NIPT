@@ -142,7 +142,7 @@ ggplot(all_positions_covered_df) +
   ylab('depth') + 
   scale_x_continuous(expand = c(0, 0), limits = c(0,235000), breaks = c(0,47000,94000,141000,188000,235000)) + 
   theme_classic() +
-  theme(axis.text.x = element_text(angle = 80, hjust = 1.5)) + 
+  theme(axis.text.x = element_text(angle = 90, hjust = -.1)) + 
   scale_y_continuous(expand = c(0, 0)) 
   #xlim(0,250000) + 
 
