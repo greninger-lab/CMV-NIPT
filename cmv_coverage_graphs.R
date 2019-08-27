@@ -136,16 +136,17 @@ coverage_plot
 
 #mapping = aes(x = x, y = y), stat = "identity"
 
-ggplot(all_positions_covered_df) + 
+x<-ggplot(all_positions_covered_df) + 
   geom_freqpoly(aes(x = all_positions_covered_df$all_positions_covered), binwidth = 1) + 
   xlab('position') + 
   ylab('depth') + 
   scale_x_continuous(expand = c(0, 0), limits = c(0,235000), breaks = c(0,47000,94000,141000,188000,235000)) + 
   theme_classic() +
-  theme(axis.text.x = element_text(angle = 90, hjust = -.1)) + 
+  theme(axis.text.x = element_text(angle = 90, vjust = .1)) + 
   scale_y_continuous(expand = c(0, 0)) 
   #xlim(0,250000) + 
-
+x
+ggsave(plot=x, "test.pdf", height = 3, width = 5)
 
 
 
