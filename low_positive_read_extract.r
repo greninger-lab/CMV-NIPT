@@ -1,4 +1,5 @@
 library(svMisc)
+library(seqinr)
 
 setwd('/Users/gerbix/Documents/vikas/NIPT/31119_download')
 
@@ -30,3 +31,18 @@ for(i in 1:nrow(intermediates_with_sequences)){
   }
 
 write.csv(intermediates_with_sequences,'intermediate_positive_sequences.csv')
+
+system('mkdir intermediate_positive_fastas')
+setwd('intermediate_positive_fastas/')
+
+for(i in 1:nrow(intermediates_with_sequences)){ 
+  temp_header<-paste0(intermediates_with_sequences$sample[i],intermediates_with_sequences$nameslist[i])
+  temp_seq<-intermediates_with_sequences$seqslist[i]
+  print(temp_header)
+  temp_file_name<-paste(i,'.tempfa')
+  write.fasta(sequences = temp_seq, names = temp_header, file.out = temp_file_name)
+}
+system('cat *.tempfa > intermediate_sequences.fasta')
+system('rm *.tempfa')
+
+
