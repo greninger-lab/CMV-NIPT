@@ -1,5 +1,6 @@
 library(svMisc)
 library(seqinr)
+library(Rsamtools)
 
 setwd('/Users/gerbix/Documents/vikas/NIPT/31119_download')
 
@@ -45,4 +46,19 @@ for(i in 1:nrow(intermediates_with_sequences)){
 system('cat *.tempfa > intermediate_sequences.fasta')
 system('rm *.tempfa')
 
+intermediates_with_sequences$isize<-NA
+for(i in 1:nrow(intermediates_with_sequences)){ 
+  #progress(i,nrow(intermediates_with_sequences))
+  tempbamname<-paste0('/Users/gerbix/Documents/vikas/NIPT/31119_download/34_mismatches/original_bams/',intermediates_with_sequences$sample[i],'.sam.bam')
+  tempbam<-scanBam(tempbamname)
+  read<-which(grepl(intermediates_with_sequences$nameslist[i], tempbam[[1]]$qname))
+  temp_isize<-((tempbam[[1]]$isize[read]))
+  if( any(is.na(temp_isize))) {
+    temp_isize<-0
+  }
+  temp_isize<-abs(temp_isize[1])
+  print(temp_isize)
+  intermediates_with_sequences$isize[i]<-temp_isize
+  }
+intermediates_median<-median(intermediates_with_sequences$isize)
 
