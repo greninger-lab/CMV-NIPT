@@ -23,7 +23,6 @@ for(i in 1:nrow(intermediates)){
   print(temp)
   for(j in 1:length(temp)){ 
     intermediates_with_sequences<-rbind(intermediates_with_sequences, blast_positive[temp[j],])
-    
     }
 }
 intermediates_with_sequences$nameslist<-as.character(intermediates_with_sequences$nameslist)
@@ -32,10 +31,10 @@ for(i in 1:nrow(intermediates_with_sequences)){
   intermediates_with_sequences$nameslist[i]<-as.character(strsplit(as.character(intermediates_with_sequences$nameslist[i]),'-')[[1]][2])
   }
 
-write.csv(intermediates_with_sequences,'intermediate_positive_sequences.csv')
+write.csv(intermediates_with_sequences,'intermediate_positive_sequences_deduplicated.csv')
 
-system('mkdir intermediate_positive_fastas')
-setwd('intermediate_positive_fastas/')
+system('mkdir intermediate_positive_fastas_deduplicated')
+setwd('intermediate_positive_fastas_deduplicated/')
 
 for(i in 1:nrow(intermediates_with_sequences)){ 
   temp_header<-paste0(intermediates_with_sequences$sample[i],intermediates_with_sequences$nameslist[i])
@@ -50,7 +49,7 @@ system('rm *.tempfa')
 intermediates_with_sequences$isize<-NA
 for(i in 1:nrow(intermediates_with_sequences)){ 
   #progress(i,nrow(intermediates_with_sequences))
-  tempbamname<-paste0('/Users/gerbix/Documents/vikas/NIPT/31119_download/34_mismatches/original_bams/',intermediates_with_sequences$sample[i],'.sam.bam')
+  tempbamname<-paste0('/Users/gerbix/Documents/vikas/NIPT/31119_download/34_mismatches/original_bams_deduplicated/',intermediates_with_sequences$sample[i],'.sam.bam.sorted.bam_dedup.bam')
   tempbam<-scanBam(tempbamname)
   read<-which(grepl(intermediates_with_sequences$nameslist[i], tempbam[[1]]$qname))
   temp_isize<-((tempbam[[1]]$isize[read]))
@@ -60,7 +59,8 @@ for(i in 1:nrow(intermediates_with_sequences)){
   temp_isize<-abs(temp_isize[1])
   print(temp_isize)
   intermediates_with_sequences$isize[i]<-temp_isize
-  }
+}
+intermediates_with_sequences<-intermediates_with_sequences[complete.cases(intermediates_with_sequences$isize),]
 intermediates_median<-median(intermediates_with_sequences$isize)
 ggplot(intermediates_with_sequences, aes(x = intermediates_with_sequences$isize)) + 
   geom_freqpoly() + 
