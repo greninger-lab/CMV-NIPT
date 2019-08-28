@@ -1,6 +1,7 @@
 library(svMisc)
 library(seqinr)
 library(Rsamtools)
+library(ggplot2)
 
 setwd('/Users/gerbix/Documents/vikas/NIPT/31119_download')
 
@@ -61,4 +62,6 @@ for(i in 1:nrow(intermediates_with_sequences)){
   intermediates_with_sequences$isize[i]<-temp_isize
   }
 intermediates_median<-median(intermediates_with_sequences$isize)
-
+ggplot(intermediates_with_sequences, aes(x = intermediates_with_sequences$isize)) + 
+  geom_freqpoly() + 
+  theme_classic() 
