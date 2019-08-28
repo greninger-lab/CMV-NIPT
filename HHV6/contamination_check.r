@@ -38,4 +38,14 @@ for(i in 1:nrow(blast_positive)){
 }
 blast_positive<-blast_positive[complete.cases(blast_positive$pos),]
 
+sorted_blast_positive<-blast_positive[order(blast_positive$seqslist),]
+
+
+for(i in 1:nrow(sorted_blast_positive)){ 
+  if(i +1 < nrow(blast_positive) & blast_positive$seqslist[i]==blast_positive$seqslist[i+1]){ 
+    print(i)
+    }
+  }
+
+
 
