@@ -9,12 +9,12 @@ library(svMisc)
 library(ggplot2)
 library(xlsx)
 
-setwd('/Users/gerbix/Documents/vikas/NIPT/31119_download/34_mismatches')
-blasthitsfile<-read.csv('/Users/gerbix/Documents/vikas/NIPT/31119_download/34_mismatches/blast_hits.csv')
+setwd('/Users/gerbix/Documents/vikas/NIPT/all_deduplicated')
+blasthitsfile<-read.csv('/Users/gerbix/Documents/vikas/NIPT/all_deduplicated/blast_hits.csv')
 #human_blasthitsfile<-read.csv('human_filtered_blast_hits.csv')
 #blasthitsfile<-read.csv('cmv_blast_hits.csv')
 #fastafile<-readDNAStringSet('/Users/gerbix/Documents/vikas/NIPT/21419_download/cmv_combined_masked.fasta')
-fastafile<-readDNAStringSet('/Users/gerbix/Documents/vikas/NIPT/31119_download/34_mismatches/cmv_combined_masked_n_removed.fasta')
+fastafile<-readDNAStringSet('/Users/gerbix/Documents/vikas/NIPT/all_deduplicated/original_bams_deduplicated/cmv_combined_masked.fasta')
 colnames(blasthitsfile)[1]<-'readname'
 colnames(blasthitsfile)[2]<-'count'
 
