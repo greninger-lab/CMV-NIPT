@@ -9,16 +9,16 @@ library(svMisc)
 library(ggplot2)
 library(xlsx)
 
-setwd('/Users/gerbix/Documents/vikas/NIPT/31119_download/34_mismatches')
-blasthitsfile<-read.csv('/Users/gerbix/Documents/vikas/NIPT/31119_download/34_mismatches/blast_hits.csv')
+setwd('/Users/gerbix/Documents/vikas/NIPT/new_samples')
+blasthitsfile<-read.csv('/Users/gerbix/Documents/vikas/NIPT/new_samples/blast_hits.csv')
 #human_blasthitsfile<-read.csv('human_filtered_blast_hits.csv')
 #blasthitsfile<-read.csv('cmv_blast_hits.csv')
 #fastafile<-readDNAStringSet('/Users/gerbix/Documents/vikas/NIPT/21419_download/cmv_combined_masked.fasta')
-fastafile<-readDNAStringSet('/Users/gerbix/Documents/vikas/NIPT/31119_download/34_mismatches/cmv_combined_masked_n_removed.fasta')
+fastafile<-readDNAStringSet('/Users/gerbix/Documents/vikas/NIPT/new_samples/deduplicated/cmv_combined_masked.fasta')
 colnames(blasthitsfile)[1]<-'readname'
 colnames(blasthitsfile)[2]<-'count'
 
-read_counts_all<-read.csv2('/Users/gerbix/Documents/vikas/NIPT/31119_download/read_counts_all.csv', sep = ',')
+read_counts_all<-read.csv2('/Users/gerbix/Documents/vikas/NIPT/new_samples/read_counts.csv', sep = ',',header = FALSE, col.names = c('sample', 'count'))
 read_counts_all$sample<-as.character(read_counts_all$sample)
 for(i in 1:length(read_counts_all$sample)){ 
   read_counts_all$sample[i]<-strsplit(read_counts_all$sample[i],'[.]')[[1]][1]
