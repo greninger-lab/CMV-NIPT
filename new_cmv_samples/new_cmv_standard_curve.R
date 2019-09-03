@@ -28,6 +28,11 @@ curve<-ggplot(rpkm_values, aes(x = rpm, y = quant)) +
 #  scale_x_log10() + 
   ylim(c(0,20000)) +
   xlim(c(0,3)) + 
+  geom_smooth(method = "lm", se = FALSE, alpha = .5) + 
   theme_classic() + 
   geom_vline(xintercept = .3, linetype = 'dotted')
 curve
+ggsave( plot = curve, 'cmv_quants.pdf', height = 4, width = 4)
+
+write.csv(rpkm_values, 'rpkm_values_with_quants.csv')
+  
