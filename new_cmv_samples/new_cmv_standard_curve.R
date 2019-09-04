@@ -9,8 +9,9 @@ for(i in 1:nrow(cmv_ids)){
   cmv_ids$bid[i]<-strsplit(as.character(cmv_ids$bid[i]), 'P')[[1]][2]
 }
 
-rpkm_values<-read.xlsx('/Users/gerbix/Documents/vikas/NIPT/new_samples/rpkm_values.xlsx',sheetIndex = 1)
-
+rpkm_values<-read.csv('/Users/gerbix/Documents/vikas/NIPT/new_samples/all_sample_data.csv')
+rpkm_values$sample<-as.character(rpkm_values$sample)
+rpkm_values$rpm<-as.numeric(as.character(rpkm_values$rpm))
 cmv_quants<-read.xlsx('/Users/gerbix/Documents/vikas/NIPT/new_samples/CMVPulled.xlsx', sheetIndex = 1)
 
 rpkm_values$quant<-NA
@@ -27,7 +28,7 @@ curve<-ggplot(rpkm_values, aes(x = rpm, y = quant)) +
   geom_point() +
 #  scale_x_log10() + 
   ylim(c(0,20000)) +
-  xlim(c(0,3)) + 
+  #xlim(c(0,3)) + 
   geom_smooth(method = "lm", se = FALSE, alpha = .5) + 
   theme_classic() + 
   geom_vline(xintercept = .3, linetype = 'dotted')
