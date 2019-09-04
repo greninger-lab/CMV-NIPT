@@ -14,7 +14,7 @@ blasthitsfile<-read.csv('/Users/gerbix/Documents/vikas/NIPT/new_samples/blast_hi
 #human_blasthitsfile<-read.csv('human_filtered_blast_hits.csv')
 #blasthitsfile<-read.csv('cmv_blast_hits.csv')
 #fastafile<-readDNAStringSet('/Users/gerbix/Documents/vikas/NIPT/21419_download/cmv_combined_masked.fasta')
-fastafile<-readDNAStringSet('/Users/gerbix/Documents/vikas/NIPT/new_samples/deduplicated/cmv_combined_masked.fasta')
+fastafile<-readDNAStringSet('/Users/gerbix/Documents/vikas/NIPT/new_samples/fastas/cmv_combined_masked.fasta')
 colnames(blasthitsfile)[1]<-'readname'
 colnames(blasthitsfile)[2]<-'count'
 
