@@ -55,13 +55,13 @@ cmv_plot<-ggplot(combined, aes( x=combined$isize, fill = sample)) +
   ylab('occurences')+
   xlab('fragment length')+
   #annotate("text", x = 400, y = 18 , label =  paste0('mean=', mean(combined$isize))) + 
-  annotate("text", x = 400, y = 15, label =  paste0('median=', median(combined$isize[combined$isize<500])))  +
+  annotate("text", x = 400, y = 600, label =  paste0('median=', median(combined$isize[combined$isize<500])))  +
   labs(colour="file") +
   scale_y_continuous(expand = c(0,0)) +
   theme_classic() + 
-  theme(legend.position="bottom")
+  theme(legend.position="right")
 cmv_plot
-
+ggsave(plot = cmv_plot, 'new_cmv_insert_size_colored.pdf', height = 5, width = 5)
 
 for(i in (unique(combined$sample))){ 
   print(i)
