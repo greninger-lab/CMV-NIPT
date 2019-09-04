@@ -50,6 +50,9 @@ for(i in 1:nrow(fastadf)){
 
 x<-c()
 print('making fastas')
+
+system('mkdir fastas; cd fastas')
+
 for ( i in 1:nrow(fastadf)){
   lengthvar=nrow(fastadf)
   #print(100*i/lengthvar)

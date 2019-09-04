@@ -53,7 +53,7 @@ cmv_plot<-ggplot(combined, aes( x=combined$isize)) +
   #ylim(0,200) + 
   ylab('occurences')+
   xlab('fragment length')+
-  annotate("text", x = 400, y = 18 , label =  paste0('mean=', mean(combined$isize))) + 
+  #annotate("text", x = 400, y = 18 , label =  paste0('mean=', mean(combined$isize))) + 
   annotate("text", x = 400, y = 15, label =  paste0('median=', median(combined$isize)))  +
   labs(colour="file") +
   theme_classic() + 
