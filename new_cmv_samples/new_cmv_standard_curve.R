@@ -1,6 +1,6 @@
 #matching container IDs to sequencing IDs and creating standard curves for cmv samples 
 library("ggplot2")
-library("readxl")
+library("xlsx")
 
 
 cmv_ids<-read.csv('/Users/gerbix/Documents/vikas/NIPT/new_samples/new_cmv_pulled_ids.csv', sep = '\t', header = FALSE, col.names = c('sequencing_id', 'bid', 'lmid'))
@@ -37,3 +37,38 @@ ggsave( plot = curve, 'cmv_quants.pdf', height = 4, width = 4)
 
 write.csv(rpkm_values, 'rpkm_values_with_quants.csv')
   
+
+
+
+
+
+
+#Original CMV samples with qCPR data 
+
+original_cmv<-read.xlsx('/Users/gerbix/Documents/vikas/NIPT/31119_download/cmv_percent_vs_qpcr_load.xlsx', sheetIndex = 1)
+original_reformatted<- original_cmv[,c(1,4,11,12,13,14,15)]
+colnames(original_reformatted)<-c('sample','quant','count','rpkm','read_counts','rpm','classification')
+original_reformatted$time<-'original'
+
+rpkm_values$X<-NULL
+rpkm_values$time<-'new'
+
+original_new_combined<-rbind(original_reformatted,rpkm_values)
+original_new_combined$time<-as.character(original_new_combined$time)
+
+plot<-ggplot(original_new_combined, aes(x = rpm, y = quant, color= time)) + 
+  geom_point() +
+  scale_y_log10(limits=c(.1, 1000000)) + 
+  scale_x_log10(limits = c(.01, 100)) + 
+  geom_smooth(method = "lm", se = FALSE, alpha = .5, aes(group=1), color = 'black') + 
+  theme_classic() + 
+  theme(legend.title=element_blank(), legend.position = 'bottom') + 
+  geom_vline(xintercept = .3, linetype = 'dotted')
+plot
+ggsave(plot = plot, 'cmv_original_new_quant_rpm.pdf', height = 3, width = 3)
+
+summary(lm(rpm ~ quant, data=original_new_combined))
+
+
+
+
