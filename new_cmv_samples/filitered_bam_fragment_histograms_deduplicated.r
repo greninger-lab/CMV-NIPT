@@ -70,8 +70,8 @@ ggsave('combined_cmv_plot.pdf',cmv_plot)
 #####human stuff######
 
 
-setwd('/Volumes/Seagate8Tb1/nipt/bams/bams_realigned_to_hg38')
-read_counts <- read.csv("~/Documents/vikas/NIPT/clip_removed/cmv_full/read_counts.csv")
+setwd('/Volumes/Seagate8Tb1/244P_data')
+read_counts <- read.csv("/Users/gerbix/Documents/vikas/NIPT/new_samples/read_counts.csv")
 filenames = list.files(pattern = '*.bam.results.txt$')
 plotslist<-c()
 
@@ -105,7 +105,7 @@ for (i in 1:length(filenames)){
     }
   }
 }
-setwd('/Users/gerbix/Documents/vikas/NIPT/31119_download/34_mismatches')
+setwd('/Users/gerbix/Documents/vikas/NIPT/new_samples')
 
 combineddf <- do.call("rbind", dflist)
 lengthlist<-c()
