@@ -75,7 +75,7 @@ cmv_cumulative_frequency<-ggplot(combined_trimmed, aes(x = combined_trimmed$isiz
 cmv_cumulative_frequency
 
 #pulling human from sample 244P16_H02_CFFv2_NB0289
-human<-read.csv('/Volumes/Seagate8Tb1/244P_data/244P16_H02_CFFv2_NB0289.final.bam.results.txt', sep = ' ', header = FALSE, col.names = c('frequency', 'isize'))
+human<-read.csv('/Users/gerbix/Documents/vikas/NIPT/new_samples/p16.results.txt', sep = '', header = FALSE, col.names = c('frequency', 'isize'))
 human<-human[human$isize>0,]
 
 human_isizes<-rep(human$isize, human$frequency)

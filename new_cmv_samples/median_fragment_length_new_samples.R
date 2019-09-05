@@ -65,7 +65,7 @@ ggsave(plot = cmv_plot, 'new_cmv_insert_size_colored.pdf', height = 5, width = 5
 
 
 #overlaying human 
-human<-read.csv('/Volumes/Seagate8Tb1/244P_data/244P16_H02_CFFv2_NB0289.final.bam.results.txt', sep = ' ', header = FALSE, col.names = c('frequency', 'isize'))
+human<-read.csv('/Users/gerbix/Documents/vikas/NIPT/new_samples/p16.results.txt', sep = '', header = FALSE, col.names = c('frequency', 'isize'))
 human<-human[human$isize>0,]
 human_isizes<-rep(human$isize, human$frequency)
 human_df<-as.data.frame(human_isizes)
@@ -76,14 +76,14 @@ human_df$read_id<-'eh'
 
 cmv_df<-as.data.frame(table(combined$isize[combined$isize<500]))
 cmv_df$percent<-NA
-for(i in 1:nrow(x)){ 
+for(i in 1:nrow(cmv_df)){ 
   cmv_df$percent[i] <- 100 * (cmv_df$Freq[i] / sum(cmv_df$Freq))
   }
 cmv_df$type<-'CMV'
 
 human_isize_df<-as.data.frame(table(human_df$isize[human_df$isize<500]))
 human_isize_df$percent<-NA
-for(i in 1:nrow(x)){ 
+for(i in 1:nrow(human_isize_df)){ 
   human_isize_df$percent[i] <- 100 * (human_isize_df$Freq[i] / sum(human_isize_df$Freq))
 }
 human_isize_df$type<-'Human'
