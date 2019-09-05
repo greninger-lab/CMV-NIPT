@@ -65,12 +65,13 @@ cmv_plot
 combined_trimmed<-combined[combined$isize<501,]
 
 cmv_cumulative_frequency<-ggplot(combined_trimmed, aes(x = combined_trimmed$isize, color = combined_trimmed$sample)) + 
+  stat_ecdf(geom = 'step', size  =.5 ) +
   theme_classic() +  
+  scale_fill_manual(values = getPalette(colourCount)) +
   theme(legend.position='bottom') + 
   xlab('Insert size') + 
-  ylab ('Cumulative frequency') + 
+  ylab ('Cumulative frequency') 
   #scale_colour_brewer(palette = 'Set2') + 
-  stat_ecdf(geom = 'step', size  =1 ) 
 cmv_cumulative_frequency
 
 #pulling human from sample 244P16_H02_CFFv2_NB0289
@@ -84,17 +85,33 @@ human_df$sample<-'P16_Human'
 human_df$read_id<-'eh'
 
 
+
 human_cmv_combined<-rbind(human_df,combined_trimmed)
+library(RColorBrewer)
+getPalette = colorRampPalette(brewer.pal(8, "Set3"))
+colourCount = length(unique(human_cmv_combined$sample))
+
+
+cmv_cumulative_frequency<-ggplot(combined_trimmed, aes(x = isize, color = sample)) + 
+  stat_ecdf(geom = 'step', size  =.5 )+
+  scale_color_manual(values = getPalette(colourCount)) + 
+  theme_classic() +  
+  theme(legend.position='bottom') + 
+  xlab('Insert size') + 
+  ylab ('Cumulative frequency') 
+cmv_cumulative_frequency
+
 
 cumulative_freq_with_human<-ggplot(human_cmv_combined, aes(x = human_cmv_combined$isize, color = human_cmv_combined$sample)) + 
   theme_classic() +  
   theme(legend.position='none') + 
+  scale_color_manual(values = getPalette(colourCount)) + 
   xlab('Insert size') + 
   ylab ('Cumulative frequency') + 
   stat_ecdf(geom = 'step', size  =.5 ) +
-  scale_colour_brewer(palette = 'Set2') 
+  scale_fill_manual(values = x)
 cumulative_freq_with_human
-ggsave(plot = cumulative_freq_with_human, 'cmv_cum_freq_with_human.pdf', height = 3, width = 3)
+ggsave(plot = cumulative_freq_with_human, 'cmv_cum_freq_with_human_recolored.pdf', height = 3, width = 3)
 
 
 
