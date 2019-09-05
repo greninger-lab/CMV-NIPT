@@ -74,23 +74,41 @@ human_df$sample<-'P16_Human'
 human_df$read_id<-'eh'
 
 
+cmv_df<-as.data.frame(table(combined$isize[combined$isize<500]))
+cmv_df$percent<-NA
+for(i in 1:nrow(x)){ 
+  cmv_df$percent[i] <- 100 * (cmv_df$Freq[i] / sum(cmv_df$Freq))
+  }
+cmv_df$type<-'CMV'
 
-cmv_plot<-ggplot(combined, aes( x=combined$isize)) + 
-  geom_histogram(binwidth = 5) +
+human_isize_df<-as.data.frame(table(human_df$isize[human_df$isize<500]))
+human_isize_df$percent<-NA
+for(i in 1:nrow(x)){ 
+  human_isize_df$percent[i] <- 100 * (human_isize_df$Freq[i] / sum(human_isize_df$Freq))
+}
+human_isize_df$type<-'Human'
+
+combined_isize_df<-rbind(human_isize_df, cmv_df)
+
+
+cmv_plot<-ggplot(combined_isize_df, aes( x=as.numeric(as.character(combined_isize_df$Var1)), y = as.numeric(as.character(combined_isize_df$percent)),color = combined_isize_df$type)) +
+  geom_line() + 
   #geom_vline(xintercept = median(combined$isize)) +
   xlim(0,500) + 
-  #ylim(0,200) + 
-  ylab('occurences')+
-  xlab('fragment length')+
+  ylim(0,3) + 
+  ylab('percent')+
+  xlab('insert size')+
   #annotate("text", x = 400, y = 18 , label =  paste0('mean=', mean(combined$isize))) + 
   #annotate("text", x = 400, y = 600, label =  paste0('median=', median(combined$isize[combined$isize<500])))  +
-  geom_line(data = human, aes(x = human$isize, y = human$frequency), alpha = .5) + 
-  labs(colour="file") +
-  scale_y_continuous(expand = c(0,0)) +
-  theme_classic() + 
-  theme(legend.position="none")
+  #labs(colour="file") +
+  #scale_y_continuous(expand = c(0,0)) +
+  #theme(legend.title ="") + 
+  theme_classic() +
+  #theme(legend.title = element_blank()) 
+  theme(legend.position = 'none') 
 cmv_plot
 
+ggsave(plot = cmv_plot, 'new_cmv_isize_distribution.pdf', height = 3, width = 3)
 
 ######
 for(i in (unique(combined$sample))){ 
