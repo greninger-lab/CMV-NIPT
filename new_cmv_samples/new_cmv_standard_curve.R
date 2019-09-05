@@ -56,16 +56,21 @@ rpkm_values$time<-'new'
 original_new_combined<-rbind(original_reformatted,rpkm_values)
 original_new_combined$time<-as.character(original_new_combined$time)
 
+library(RColorBrewer)
+getPalette = colorRampPalette(brewer.pal(8, "Set3"))
+colourCount = length(unique(human_cmv_combined$sample))
+
 plot<-ggplot(original_new_combined, aes(x = rpm, y = quant, color= time)) + 
   geom_point() +
   scale_y_log10(limits=c(.1, 1000000)) + 
   scale_x_log10(limits = c(.01, 100)) + 
   geom_smooth(method = "lm", se = FALSE, alpha = .5, aes(group=1), color = 'black') + 
+  scale_color_manual(values = c( "#BEBADA", "#FB8072", "#80B1D3", "#FDB462", "#B3DE69", "#FCCDE5")) + 
   theme_classic() + 
   theme(legend.title=element_blank(), legend.position = 'bottom') + 
   geom_vline(xintercept = .3, linetype = 'dotted')
 plot
-ggsave(plot = plot, 'cmv_original_new_quant_rpm.pdf', height = 3, width = 3)
+ggsave(plot = plot, 'cmv_original_new_quant_rpm_recolored.pdf', height = 3, width = 3)
 
 summary(lm(rpm ~ quant, data=original_new_combined))
 
