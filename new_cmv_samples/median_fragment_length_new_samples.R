@@ -95,7 +95,7 @@ cmv_plot<-ggplot(combined_isize_df, aes( x=as.numeric(as.character(combined_isiz
   geom_line() + 
   #geom_vline(xintercept = median(combined$isize)) +
   xlim(0,500) + 
-  ylim(0,3) + 
+  ylim(0,2.5) + 
   ylab('percent')+
   xlab('insert size')+
   #annotate("text", x = 400, y = 18 , label =  paste0('mean=', mean(combined$isize))) + 
