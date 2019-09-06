@@ -330,6 +330,7 @@ percent_plot<-ggplot(head_freq_df, aes(x= head_freq_df$isize, y=head_freq_df$per
   xlab('Fragment length') + 
   ylab('percent of mapped reads in the sample') + 
   xlim(c(50,400)) + 
+  ylim(c(0,2.5)) + 
   geom_vline(xintercept = 167) +
   theme_classic()
 percent_plot
@@ -341,11 +342,13 @@ percent_plot<-ggplot(freq_df, aes(x= freq_df$isize, y=freq_df$percent, color = f
   xlab('Fragment length') + 
   ylab('% of mapped reads in the sample') +
   xlim(c(0,500))+
-  geom_vline(xintercept = 168) + 
-  theme_classic()
+  ylim(c(0,2.5)) + 
+  #geom_vline(xintercept = 168) + 
+  theme_classic() + 
+  theme(legend.position = 'none')
 percent_plot
 
-ggsave('121_r04_only_realigned_human_vs_resequenced_frequency_plot.pdf', percent_plot)
+ggsave('121_r04_only_realigned_human_vs_resequenced_frequency_plot.pdf', percent_plot, height = 3 , width = 3)
 
 
 #data for percent plot
