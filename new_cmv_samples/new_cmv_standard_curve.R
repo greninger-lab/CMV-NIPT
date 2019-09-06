@@ -23,7 +23,7 @@ for(i in 1:nrow(cmv_ids)){
   rpkm_values$quant[temp]<-cmv_quants$result_num[temp_quant]
 }
 
-
+rpkm_values$quant_adjusted<-rpkm_values$quant * 4
 curve<-ggplot(rpkm_values, aes(x = rpm, y = quant)) + 
   geom_point() +
 #  scale_x_log10() + 
@@ -49,6 +49,7 @@ original_cmv<-read.xlsx('/Users/gerbix/Documents/vikas/NIPT/31119_download/cmv_p
 original_reformatted<- original_cmv[,c(1,4,11,12,13,14,15)]
 colnames(original_reformatted)<-c('sample','quant','count','rpkm','read_counts','rpm','classification')
 original_reformatted$time<-'original'
+original_reformatted$quant_adjusted<-original_reformatted$quant
 
 rpkm_values$X<-NULL
 rpkm_values$time<-'new'
@@ -60,19 +61,20 @@ library(RColorBrewer)
 getPalette = colorRampPalette(brewer.pal(8, "Set3"))
 colourCount = length(unique(human_cmv_combined$sample))
 
-plot<-ggplot(original_new_combined, aes(x = rpm, y = quant, color= time)) + 
+plot<-ggplot(original_new_combined, aes(x = rpm, y = quant_adjusted, color= time)) + 
   geom_point() +
-  scale_y_log10(limits=c(.1, 1000000)) + 
+  scale_y_log10(breaks = c( 1, 10, 100, 1000, 10000,100000))+ 
   scale_x_log10(limits = c(.01, 100)) + 
+  #geom_hline(yintercept = 68000) + 
   geom_smooth(method = "lm", se = FALSE, alpha = .5, aes(group=1), color = 'black') + 
   scale_color_manual(values = c( "#BEBADA", "#FB8072", "#80B1D3", "#FDB462", "#B3DE69", "#FCCDE5")) + 
   theme_classic()  + 
   theme(legend.title=element_blank(), legend.position = 'none') 
   #geom_vline(xintercept = .3, linetype = 'dotted')
 plot
-ggsave(plot = plot, 'cmv_original_new_quant_rpm_recolored.pdf', height = 3, width = 3)
+ggsave(plot = plot, 'cmv_original_new_quant_rpm_recolored_quant_adjusted.pdf', height = 3, width = 3)
 
-summary(lm(rpm ~ quant, data=original_new_combined))
+summary(lm(rpm ~ quant_adjusted, data=original_new_combined))
 
 
 
