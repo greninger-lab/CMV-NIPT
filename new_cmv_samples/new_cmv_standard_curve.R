@@ -66,9 +66,9 @@ plot<-ggplot(original_new_combined, aes(x = rpm, y = quant, color= time)) +
   scale_x_log10(limits = c(.01, 100)) + 
   geom_smooth(method = "lm", se = FALSE, alpha = .5, aes(group=1), color = 'black') + 
   scale_color_manual(values = c( "#BEBADA", "#FB8072", "#80B1D3", "#FDB462", "#B3DE69", "#FCCDE5")) + 
-  theme_classic() + 
-  theme(legend.title=element_blank(), legend.position = 'bottom') + 
-  geom_vline(xintercept = .3, linetype = 'dotted')
+  theme_classic()  + 
+  theme(legend.title=element_blank(), legend.position = 'none') 
+  #geom_vline(xintercept = .3, linetype = 'dotted')
 plot
 ggsave(plot = plot, 'cmv_original_new_quant_rpm_recolored.pdf', height = 3, width = 3)
 
