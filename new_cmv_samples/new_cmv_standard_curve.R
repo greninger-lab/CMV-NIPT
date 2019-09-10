@@ -45,7 +45,7 @@ write.csv(rpkm_values, 'rpkm_values_with_quants.csv')
 
 #Original CMV samples with qCPR data 
 
-original_cmv<-read.xlsx('/Users/gerbix/Documents/vikas/NIPT/31119_download/cmv_percent_vs_qpcr_load.xlsx', sheetIndex = 1)
+original_cmv<-read.xlsx('/Users/gerbix/Documents/vikas/NIPT/31119_download/qpcr_graph_update/6131_cmv_percent_vs_qpcr_load.xlsx', sheetIndex = 1)
 original_reformatted<- original_cmv[,c(1,4,11,12,13,14,15)]
 colnames(original_reformatted)<-c('sample','quant','count','rpkm','read_counts','rpm','classification')
 original_reformatted$time<-'original'
