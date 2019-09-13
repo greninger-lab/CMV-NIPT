@@ -115,9 +115,12 @@ ggsave(plot = cumulative_freq_with_human, 'cmv_cum_freq_with_human_recolored.pdf
 
 
 
+human_cdf<-as.data.frame(Ecdf(human_cmv_combined$isize[human_cmv_combined$sample=='P16_Human']), col.names =(c('size','proportion')))
+cmv_cdf<-as.data.frame(Ecdf(human_cmv_combined$isize[human_cmv_combined$sample!='P16_Human']), col.names =(c('size','proportion')))
+cdf_combined<-merge(human_cdf, cmv_cdf, by="size", all = T)
+write.csv(cdf_combined, 'new_cmv_cdf.csv')
 
-
-
+plot(ecdf(human_cmv_combined$isize[human_cmv_combined$sample=='P16_Human']), col.names =(c('size','proportion')))
 
 
 

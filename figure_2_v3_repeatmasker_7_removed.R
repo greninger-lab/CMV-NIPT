@@ -3,6 +3,8 @@ library(Rsamtools)
 library(svMisc)
 library(seqinr)
 library(reshape2)
+library(Hmisc)
+
 
 setwd('/Users/gerbix/Documents/vikas/NIPT/31119_download/figure_2_final/71719')
 #read_counts <- read.csv("~/Documents/vikas/NIPT/clip_removed/cmv_full/read_counts.csv")
@@ -354,8 +356,10 @@ ggsave(plot = cum_frequency, 'cmv_deduplicated_cum_frequency.pdf',width = 3, hei
 shapiro.test(subsampled_df$isizes[subsampled_df$type=='human'])
 
 
-
-
+human_cdf<-as.data.frame(Ecdf(human_isize_expanded), col.names =(c('size','proportion')))
+cmv_cdf<-as.data.frame(Ecdf(CMV_isize_exanded),col.names=(c('size','proportion')))
+cdf_combined<-merge(human_cdf, cmv_cdf, by="size", all = T)
+write.csv(cdf_combined, 'human_cdf_121r04.csv')
 
 
 
