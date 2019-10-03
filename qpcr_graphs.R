@@ -91,7 +91,7 @@ ggsave(plot = figure_1b_plot, filename = 'qpcr_graphs/figure_1b_plot.pdf', heigh
 int_breaks <- function(x, n = 5) pretty(x, n)[pretty(x, n) %% 1 == 0] 
 
 
-df_for_graph<-read.csv('/Users/gerbix/Documents/vikas/NIPT/31119_download/34_mismatches/all_sample_data.csv')
+df_for_graph<-read.csv('/Users/gerbix/Documents/vikas/NIPT/all_deduplicated/all_sample_data.csv')
 figure_1b_plot_rpm<-ggplot(df_for_graph, aes(x=rpm, fill = classification)) + 
    geom_histogram(bins = 45, color = 'black') +  
   scale_x_log10() + 

@@ -92,6 +92,9 @@ positivereads<-c()
 weak_positives<-c()
 weak_positives_reads<-c()
 
+
+
+
 unique_file_list<-unique(blasthitsfile$sample_id)
 for (i in 1:length(unique_file_list)) { 
   print(100*i/length(unique_file_list))
