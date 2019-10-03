@@ -10,11 +10,22 @@ library(ggplot2)
 library(xlsx)
 
 setwd('/Users/gerbix/Documents/vikas/NIPT/new_samples')
-blasthitsfile<-read.csv('/Users/gerbix/Documents/vikas/NIPT/new_samples/blast_hits.csv')
+
+#blasthitsfile<-read.csv('/Users/gerbix/Documents/vikas/NIPT/new_samples/blast_hits.csv')
+
+#####edits
+blasthitsfile<-read.csv('/Users/gerbix/Documents/vikas/NIPT/new_samples/deduplicated/blast_hits.csv')
+####
+
 #human_blasthitsfile<-read.csv('human_filtered_blast_hits.csv')
 #blasthitsfile<-read.csv('cmv_blast_hits.csv')
 #fastafile<-readDNAStringSet('/Users/gerbix/Documents/vikas/NIPT/21419_download/cmv_combined_masked.fasta')
 fastafile<-readDNAStringSet('/Users/gerbix/Documents/vikas/NIPT/new_samples/fastas/cmv_combined_masked.fasta')
+
+####edits
+fastafile<-readDNAStringSet('/Users/gerbix/Documents/vikas/NIPT/new_samples/deduplicated/cmv_combined_masked.fasta')
+######
+
 colnames(blasthitsfile)[1]<-'readname'
 colnames(blasthitsfile)[2]<-'count'
 
@@ -29,6 +40,7 @@ for(i in 1:length(read_counts_all$sample)){
 blasthitsfile$readname<-as.character(blasthitsfile$readname)
 blasthitsfile$unique_identifier<-NA
 blasthitsfile$full_readname<-blasthitsfile$readname
+
 blasthitsfile$sample_id<-NA
 for(i in 1:nrow(blasthitsfile)){
   blasthitsfile$unique_identifier[i]<-strsplit(blasthitsfile$readname[i],'[-]')[[1]][2]
@@ -92,7 +104,15 @@ positivereads<-c()
 weak_positives<-c()
 weak_positives_reads<-c()
 
+
+x<-blasthitsfile
+unique(x$unique_identifier)
+blasthitsfile<-blasthitsfile[which(!(duplicated(blasthitsfile$unique_identifier))),]
+
 unique_file_list<-unique(blasthitsfile$sample_id)
+
+
+
 for (i in 1:length(unique_file_list)) { 
   print(100*i/length(unique_file_list))
   count = 0

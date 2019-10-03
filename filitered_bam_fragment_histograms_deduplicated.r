@@ -60,7 +60,7 @@ cmv_plot<-ggplot(combined, aes( x=combined$isize)) +
 cmv_plot
 
 
-ggsave('combined_cmv_plot.pdf',cmv_plot)
+wggsave('combined_cmv_plot.pdf',cmv_plot)
 
 
 
