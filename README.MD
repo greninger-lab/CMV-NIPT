@@ -8,3 +8,4 @@ Our goal is to detect CMV in cfDNA sequence from the serum of pregnant mothers. 
 
 ## We aligned cell-free DNA sequence to the CMV Merlin reference genome and extracted blast-verified CMV reads
 ![test1](https://github.com/vpeddu/CMV-NIPT/blob/master/figures/Screen%20Shot%202019-10-04%20at%203.31.20%20PM.png)
+<img src="https://github.com/vpeddu/CMV-NIPT/blob/master/figures/Screen%20Shot%202019-10-04%20at%203.31.20%20PM.png" width="100" height="100">
