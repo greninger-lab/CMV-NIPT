@@ -7,4 +7,6 @@ CMV is the leading cause of newborn deafness via congenital infections. Despite 
 Our goal is to detect CMV in cfDNA sequence from the serum of pregnant mothers. Here, we use pre-existing maternal cell-free DNA sequence to find CMV sequence in this data and evaluate it as a method of diagnosing congenital CMV infections.
 
 ## We aligned cell-free DNA sequence to the CMV Merlin reference genome and extracted blast-verified CMV reads
+After aligning to the CMV Merlin reference genome (NC_006273.2) all aligned reads were extracted, repeatmasked, and run through blast. Anything with more than 15 reads aligning with an E-value < 1e-8 was kept and manually verified as a true CMV read.
+
 <img src="https://github.com/vpeddu/CMV-NIPT/blob/master/figures/Screen%20Shot%202019-10-04%20at%203.31.20%20PM.png" width="400" height="500">
