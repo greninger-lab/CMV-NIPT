@@ -11,16 +11,16 @@ library(xlsx)
 
 setwd('/Users/gerbix/Documents/vikas/NIPT/new_samples')
 
-#blasthitsfile<-read.csv('/Users/gerbix/Documents/vikas/NIPT/new_samples/blast_hits.csv')
+blasthitsfile<-read.csv('/Users/gerbix/Documents/vikas/NIPT/new_samples/blast_hits.csv')
 
 #####edits
-blasthitsfile<-read.csv('/Users/gerbix/Documents/vikas/NIPT/new_samples/deduplicated/blast_hits.csv')
+#blasthitsfile<-read.csv('/Users/gerbix/Documents/vikas/NIPT/new_samples/deduplicated/blast_hits.csv')
 ####
 
 #human_blasthitsfile<-read.csv('human_filtered_blast_hits.csv')
 #blasthitsfile<-read.csv('cmv_blast_hits.csv')
-#fastafile<-readDNAStringSet('/Users/gerbix/Documents/vikas/NIPT/21419_download/cmv_combined_masked.fasta')
-fastafile<-readDNAStringSet('/Users/gerbix/Documents/vikas/NIPT/new_samples/fastas/cmv_combined_masked.fasta')
+fastafile<-readDNAStringSet('/Users/gerbix/Documents/vikas/NIPT/21419_download/cmv_combined_masked.fasta')
+#fastafile<-readDNAStringSet('/Users/gerbix/Documents/vikas/NIPT/new_samples/fastas/cmv_combined_masked.fasta')
 
 ####edits
 fastafile<-readDNAStringSet('/Users/gerbix/Documents/vikas/NIPT/new_samples/deduplicated/cmv_combined_masked.fasta')
