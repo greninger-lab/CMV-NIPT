@@ -59,7 +59,7 @@ original_new_combined$time<-as.character(original_new_combined$time)
 
 library(RColorBrewer)
 getPalette = colorRampPalette(brewer.pal(8, "Set3"))
-colourCount = length(unique(human_cmv_combined$sample))
+colourCount = length(unique(original_new_combined$time))
 
 plot<-ggplot(original_new_combined, aes(x = rpm, y = quant_adjusted, color= time)) + 
   geom_point() +
@@ -72,7 +72,7 @@ plot<-ggplot(original_new_combined, aes(x = rpm, y = quant_adjusted, color= time
   theme(legend.title=element_blank(), legend.position = 'none') 
   #geom_vline(xintercept = .3, linetype = 'dotted')
 plot
-ggsave(plot = plot, 'cmv_original_new_quant_rpm_recolored_quant_adjusted.pdf', height = 3, width = 3)
+ggsave(plot = plot, 'cmv_original_new_quant_rpm_recolored_quant_adjusted_v2.pdf', height = 3, width = 3)
 
 summary(lm(rpm ~ quant_adjusted, data=original_new_combined))
 

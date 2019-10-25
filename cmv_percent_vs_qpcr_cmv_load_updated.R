@@ -10,7 +10,7 @@ library(Rsamtools)
 setwd('/Users/gerbix/Documents/vikas/NIPT/31119_download')
 
 qpcr_results<-read.xlsx('/Users/gerbix/Documents/vikas/NIPT/31119_download/qpcr_results.xls', sheetIndex =3)
-sample_read_data<-read.csv('/Users/gerbix/Documents/vikas/NIPT/31119_download/all_sample_data.csv')
+sample_read_data<-read.csv('/Users/gerbix/Documents/vikas/NIPT/all_deduplicated/all_sample_data.csv')
 
 combined<-qpcr_results[qpcr_results$CMV_Quantity.10UL.DNA.>0,]
 combined_names<-as.character(combined$Sample.Name)
@@ -32,6 +32,9 @@ for(i in 1:length(combined_names)) {
 
 
 data<-read.xlsx('/Users/gerbix/Documents/vikas/NIPT/31119_download/qpcr_graph_update/6131_cmv_percent_vs_qpcr_load.xlsx', sheetIndex = 1)
+
+#deduplicated read counts version
+data<-read.xlsx('/Users/gerbix/Documents/vikas/NIPT/31119_download/qpcr_graph_update/82419_deduplicated_cmv_percent_vs_qpcr_load.xlsx', sheetIndex = 1)
 
 
 data$percent<-data$count/data$read_counts
@@ -83,6 +86,7 @@ cmv_percent_vs_viral_laod_regression<-ggplot(data, aes(x = data$CMv_quantity.ml_
 
   #geom_abline(slope = fit1$coefficients[2], intercept = fit1$coefficients[1])
 cmv_percent_vs_viral_laod_regression
+setwd('/Users/gerbix/Documents/vikas/NIPT/all_deduplicated')
 ggsave('rpm reads mapping to cmv with regression line_v2.pdf' ,cmv_percent_vs_viral_laod_regression, width = 3, height = 3)
 
 
