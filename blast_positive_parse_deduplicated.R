@@ -19,6 +19,10 @@ colnames(blasthitsfile)[1]<-'readname'
 colnames(blasthitsfile)[2]<-'count'
 
 read_counts_all<-read.csv2('/Users/gerbix/Documents/vikas/NIPT/31119_download/read_counts_all.csv', sep = ',')
+
+#read counts deduplicated 
+read_counts_all<-read.csv2('/Users/gerbix/Documents/vikas/NIPT/31119_download/read_counts_all_deduplicated.csv', sep = ',')
+
 read_counts_all$sample<-as.character(read_counts_all$sample)
 for(i in 1:length(read_counts_all$sample)){ 
   read_counts_all$sample[i]<-strsplit(read_counts_all$sample[i],'[.]')[[1]][1]

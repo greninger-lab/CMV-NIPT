@@ -18,6 +18,10 @@ library(RColorBrewer)
 
 setwd('/Users/gerbix/Documents/vikas/NIPT/31119_download/hhv6')
 data <- read.csv("/Users/gerbix/Documents/vikas/NIPT/31119_download/hhv6/read_counts_all.csv")
+
+#update for deduplication
+data<-read.csv('/Users/gerbix/Documents/vikas/NIPT/31119_download/hhv6/read_counts_all_deduplicated.csv')
+
 # data <- read.xlsx("gtex_icihhv6_hhv6b_positives.xlsx", sheetIndex = 2)
 # datatrimmed <- data[, -c(5:9),(12:13)]
 # data<-data[complete.cases(data$Run), ]
