@@ -198,7 +198,7 @@ p5 <- ggplot(allcombined, aes(x=factor(type),y=rpkm, color=allcombined$type))+
   ylab('normalized depth') +
   scale_y_continuous(trans='log10') 
 p5
-ggsave('hhv6_nipt_cfdna_average_coverage_rpkm.pdf', p5, width = 3, height = 3)
+ggsave('hhv6_nipt_cfdna_average_coverage_rpkm_deduplicated.pdf', p5, width = 3, height = 3)
 
 allcombined$sample<-NA
 for(i in 1:nrow(allcombined)){
