@@ -81,8 +81,8 @@ cmv_percent_vs_viral_laod_regression<-ggplot(data, aes(x = data$CMv_quantity.ml_
   scale_x_log10(limits = c(NA, 1000)) +
   xlab('CMV copies/ml by qPCR') + 
   ylab('RPM of total reads mapping to CMV')  + 
-  geom_smooth(method = "lm", se = FALSE)  
-  #stat_poly_eq(aes(label = paste(..rr.label.., sep = "~~~")), formula = fit1, parse = TRUE, size = 5) 
+  geom_smooth(method = "lm", se = FALSE)   + 
+  stat_poly_eq(aes(label = paste(..rr.label.., sep = "~~~")), formula = fit1, parse = TRUE, size = 5) 
 
   #geom_abline(slope = fit1$coefficients[2], intercept = fit1$coefficients[1])
 cmv_percent_vs_viral_laod_regression

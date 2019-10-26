@@ -307,7 +307,7 @@ kstest_graph<-ggplot(ks_df, aes(x = ks_df$tests)) +
 #theme(axisw.text.x = element_text(angle = 90, hjust = 1)) 
 # ylim(c(0,8))
 kstest_graph 
-ggsave(plot =fktest_graph, 'insert_size_variance_distribution.pdf')
+ggsave(plot = fktest_graph, 'insert_size_variance_distribution.pdf')
 
 
 plot(ecdf(CMV_isize_exanded))
