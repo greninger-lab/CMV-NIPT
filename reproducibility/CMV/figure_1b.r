@@ -4,6 +4,8 @@ library(seqinr)
 library(ggplot2)
 library(xlsx)
 
+setwd('/Users/gerbix/Documents/vikas/NIPT/nipt_git_repo/reproducibility/CMV')
+
 int_breaks <- function(x, n = 5) pretty(x, n)[pretty(x, n) %% 1 == 0] 
 
 #Modify for your own all_sample_data.csv 

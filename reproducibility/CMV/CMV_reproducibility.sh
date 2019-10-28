@@ -32,11 +32,3 @@ python blast_hits.py cmv_masked_blastn_out.txt 'Human herpesvirus 5'
 #file paths inside the script require editing based on how the above commands were run
 
 rscript --vanilla fpm_calculate.R
-
-#figure 1B
-rscript --vanilla figure_1b.r
-
-#figure 3
-#run the first script to create a frequency table of insert sizes 
-samtools view -@ 40 <deduplicated_121r04_resequenced.bam> | awk '{print $9}' | sort | uniq -c > duplicates_removed_read_lengths.txt
-rscript --vanilla figure_3.r
