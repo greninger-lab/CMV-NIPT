@@ -189,8 +189,9 @@ write.csv(allcombined, 'hhv6_cfdna_info.csv')
 
 
 #with rpkm 
-p5 <- ggplot(allcombined, aes(x=factor(type),y=rpkm, color=allcombined$type))+
-  geom_jitter(width = .3, size = .5) +
+allcombined$rpkm_adjusted<-allcombined$rpkm / max(allcombined$rpkm)
+p5 <- ggplot(allcombined, aes(x=factor(type),y=rpkm_adjusted, color=allcombined$type))+
+  geom_jitter(width = .3, size = 1) +
   labs(title="Average Coverage", color = 'Target') + 
   theme_bw() +
   theme(legend.position = 'none') + 
@@ -200,7 +201,7 @@ p5 <- ggplot(allcombined, aes(x=factor(type),y=rpkm, color=allcombined$type))+
 p5
 ggsave('hhv6_nipt_cfdna_average_coverage_rpkm_deduplicated.pdf', p5, width = 3, height = 3)
 
-allcombined$sample<-NA
+  allcombined$sample<-NA
 for(i in 1:nrow(allcombined)){
   if(grepl('bglobin',allcombined$names[i])){
     allcombined$sample[i]<-strsplit(as.character(allcombined$names[i]), '_bglobin*')[[1]][1]

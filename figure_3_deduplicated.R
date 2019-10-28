@@ -133,7 +133,7 @@ CMV_median<-median(as.numeric(as.character(CMV_isize_exanded)))
 
 
 
-CMV_plot<-ggplot(CMV_frequencies, aes( x = as.numeric(CMV_frequencies$isize) , y = CMV_frequencies$percent)) + 
+CMV_plot<-ggplot(CMV_frequencies, aes( x = as.numeric(as.character(CMV_frequencies$isize)) , y = CMV_frequencies$percent)) + 
   geom_vline(xintercept = 143, color = 'blue') + 
   theme_classic() + 
   xlim(c(0,500)) +
@@ -159,7 +159,7 @@ combined_plot <- ggplot(combined, aes ( x = as.numeric(as.character(combined$isi
   ylab('Percent within each alignment') + 
   geom_line() 
 combined_plot
-ggsave(plot = combined_plot, 'deduplicated_figure_3a_500bp.pdf', height = 3, width = 3 )
+ggsave(plot = combined_plot, 'deduplicated_figure_3a_500bp_1026.pdf', height = 3, width = 3 )
 
 
 
@@ -304,9 +304,10 @@ cum_frequency<-ggplot(subsampled_df, aes(x = subsampled_df$isizes, color = subsa
   theme(legend.position='none') + 
   xlab('Insert size') + 
   ylab ('Cumulative frequency') + 
-  stat_ecdf(geom = 'step', size  =1 ) 
+  stat_ecdf(geom = 'step', size  =1 ) + 
+  xlim(c(0,500))
 cum_frequency
-ggsave(plot = cum_frequency, 'cmv_deduplicated_cum_frequency.pdf',width = 3, height = 3 )
+ggsave(plot = cum_frequency, 'cmv_deduplicated_cum_frequency_1026.pdf',width = 3, height = 3 )
 
 
 shapiro.test(subsampled_df$isizes[subsampled_df$type=='human'])
