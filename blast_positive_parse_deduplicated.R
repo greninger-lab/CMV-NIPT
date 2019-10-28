@@ -96,7 +96,7 @@ positivereads<-c()
 weak_positives<-c()
 weak_positives_reads<-c()
 
-
+##Convert reads to fragments based on unique identifiers in the blast file
 blasthitsfile<-blasthitsfile[which(!(duplicated(blasthitsfile$unique_identifier))),]
 
 
