@@ -11,7 +11,6 @@ setwd('/Users/gerbix/Documents/vikas/NIPT/nipt_git_repo/reproducibility/CMV')
 filenames = '/Volumes/Seagate8Tb1/resquenced_121R04_D01_CFFv1_NB0222/aligned_to_hg38/duplicates_removed_read_lengths.txt'
 plotslist<-c()
 
-
 dflist<-c()
 statslist<-c()
 totallengths<-c()
@@ -78,9 +77,6 @@ for( i in 1:length(fasta_IDs)){
 
 #converts reads to fragments
 fasta_IDs_deduplicated<-fasta_IDs_trimmed[-(which(duplicated(fasta_IDs_trimmed)))]
-
-
-
 
 isize<-c()
 read_id<-c()
@@ -150,12 +146,6 @@ combined_plot <- ggplot(combined, aes ( x = as.numeric(as.character(combined$isi
   ylab('Percent within each alignment') + 
   geom_line(size = .75) 
 combined_plot
-ggsave(plot = combined_plot, 'deduplicated_figure_3a_500bp_1026.pdf', height = 3, width = 3 )
-
-
-
-
-
 
 #p-value calculations 
 CMV_isize_exanded<-as.numeric(as.character(CMV_isize_exanded))
@@ -207,22 +197,8 @@ ks_df<-data.frame(tests)
 
 median(ks_df$tests)
 
-kstest_graph<-ggplot(ks_df, aes(x = ks_df$tests)) + 
-  geom_freqpoly(bins = 1000) +
-  xlim(c(0,summary(ks_df$tests)[5]))+
-  ylim(0,2000) + 
-  xlab('p-value') + 
-  ylab('frequency (100000 iterations)') + 
-  theme_classic() 
-kstest_graph 
-ggsave(plot =fktest_graph, 'insert_size_variance_distribution.pdf')
-
-
 plot(ecdf(CMV_isize_exanded))
 plot(ecdf(human_isize_expanded))
-
-
-
 
 CMV_cdf <- ecdf(CMV_isize_exanded)
 human_cdf <- ecdf(human_isize_expanded)
@@ -237,7 +213,6 @@ plot(ecdf(CMV_isize_exanded))
 
 plot(ecdf(human_isize_expanded),add = TRUE, col = 2 )
 
-
 human_cdf_df<-data.frame()
 
 human_subsampled<-data.frame(sample(human_isize_expanded, length(CMV_isize_exanded)))
@@ -248,8 +223,6 @@ cmv_isize_df$type = 'cmv'
 colnames(cmv_isize_df)[1]<-'isizes'
 
 subsampled_df<-rbind(human_subsampled, cmv_isize_df)
-
-
 
 cum_frequency<-ggplot(subsampled_df, aes(x = subsampled_df$isizes, color = subsampled_df$type)) + 
   theme_classic() +  
@@ -265,11 +238,10 @@ ggsave(plot = cum_frequency, 'cmv_deduplicated_cum_frequency_1026.pdf',width = 3
 
 shapiro.test(subsampled_df$isizes[subsampled_df$type=='human'])
 
-
-#combined plot #cum_frequency
+#Panel
 #red: ED6464
 #blue: 05188B
 plot_grid(combined_plot, cum_frequency, labels = c('A','B'))
-ggsave(plot = last_plot(), height = 3, width = 6, filename = 'figure_3_grid.pdf')
+ggsave(plot = last_plot(), height = 3, width = 6, filename = 'figure_3.pdf')
 
 
