@@ -28,7 +28,7 @@ blastn -query cmv_combined_masked_n_removed.fasta -db /db/blast_db/nt -num_threa
 #Creates count table of BLAST hits to "Human hepesvirus 5" from the BLAST results.
 python blast_hits.py cmv_masked_blastn_out.txt 'Human herpesvirus 6<b/a>'
 
-#creates all_sample_data.csv- A table of sample name, FPM, FPKM, read counts, and classification (strong vs intermediate positive based on the FPM cutoff of .3)
+#creates all_sample_data.csv- A table of sample name, FPM, FPKM and read counts
 #file paths inside the script require editing based on how the above commands were run
 rscript --vanilla fpm_calculate.R
 
