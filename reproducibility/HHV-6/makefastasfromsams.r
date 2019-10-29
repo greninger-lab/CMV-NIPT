@@ -36,7 +36,7 @@ for(i in 1:nrow(fastadf)){
   if(grepl('NS500359', fastadf$header[i])) {
     fastadf$header[i]<-gsub(pattern = 'NS500359', replacement = '', fastadf$header[i])
   }
-  fastadf$identifier[i]<-gsub('.sam.bam','',fastadf$identifier[i])
+  fastadf$identifier[i]<-gsub('.sam.bam.sorted.deduplicated.bam','',fastadf$identifier[i])
   fastadf$header[i]<-substr(fastadf$header[i], 17, stop = nchar(fastadf$header[i]))
 }
 

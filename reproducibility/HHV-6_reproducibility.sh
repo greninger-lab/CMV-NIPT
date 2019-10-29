@@ -16,20 +16,20 @@ picard MarkDuplicates I=<sorted.bam> O=<deduplicated.bam> M=<metrics.txt> REMOVE
 ./34m.sh <deduplicated_bam_folder> 
 
 #Repeatmask output of previous command
-Repeatmasker -int -pa <cores> cmv_combined.txt
-mv cmv_combined.txt.masked cmv_combined_masked.fasta 
+Repeatmasker -int -pa <cores> hhv6_combined.txt
+mv hhv6_combined.txt.masked hhv6_combined_masked.fasta 
 
 #remove all repeat masked lines with NNNNN in it 
-for file in cmv_combined_masked.fasta
+for file in hhv6_combined_masked.fasta
 do
 sed '$!N;/NNNNN/!P;D' "$file"
-done > cmv_combined_masked_n_removed.fasta
+done > hhv6_combined_masked_n_removed.fasta
 
 #Local BLAST against NT (requires blast NT database)
-blastn -query cmv_combined_masked_n_removed.fasta -db /db/blast_db/nt -num_threads 42 -perc_identity 95 -evalue 1e-5 -out cmv_vs_full_nt.txt
+blastn -query hhv6_combined_masked_n_removed.fasta -db /db/blast_db/nt -num_threads 42 -perc_identity 95 -evalue 1e-5 -out hhv6_vs_full_nt.txt
 
 #Creates count table of BLAST hits to "Human hepesvirus 5" from the BLAST results.
-python blast_hits.py cmv_masked_blastn_out.txt 'Human herpesvirus 6<b/a>'
+python blast_hits.py hhv6_masked_blastn_out.txt 'Human herpesvirus 6<b/a>'
 
 #creates all_sample_data.csv- A table of sample name, FPM, FPKM and read counts
 #file paths inside the script require editing based on how the above commands were run
