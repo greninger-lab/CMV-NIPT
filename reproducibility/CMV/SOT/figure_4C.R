@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 library(Rsamtools)
 library(Biostrings)
 library(seqinr)
@@ -113,6 +114,8 @@ cumulative_freq_with_human
 ggsave(plot = cumulative_freq_with_human, 'figure_4c.pdf', height = 3, width = 3)
 save.image("~/Documents/vikas/NIPT/nipt_git_repo/reproducibility/CMV/SOT/figure_4c.rdata")
 =======
+=======
+>>>>>>> fc8ed0222b2c2448d148e1835a033131476adb6a
 #matching container IDs to sequencing IDs and creating standard curves for cmv samples 
 library("ggplot2")
 library("xlsx")
@@ -185,6 +188,9 @@ ggsave(plot = plot, 'figure_4c.pdf', height = 3, width = 3)
 summary(lm(rpm ~ quant_adjusted, data=original_new_combined))
 
 
+<<<<<<< HEAD
+>>>>>>> fc8ed0222b2c2448d148e1835a033131476adb6a
+=======
 >>>>>>> fc8ed0222b2c2448d148e1835a033131476adb6a
 
 

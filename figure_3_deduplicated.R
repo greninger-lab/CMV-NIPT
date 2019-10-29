@@ -312,7 +312,11 @@ cum_frequency<-ggplot(subsampled_df, aes(x = subsampled_df$isizes, color = subsa
   xlab('Insert size') + 
   ylab ('Cumulative frequency') + 
 <<<<<<< HEAD
+<<<<<<< HEAD
   stat_ecdf(geom = 'step', size  =.75 ) + 
+=======
+  stat_ecdf(geom = 'step', size  =1 ) + 
+>>>>>>> fc8ed0222b2c2448d148e1835a033131476adb6a
 =======
   stat_ecdf(geom = 'step', size  =1 ) + 
 >>>>>>> fc8ed0222b2c2448d148e1835a033131476adb6a

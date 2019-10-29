@@ -151,7 +151,11 @@ ggsave('human_plot.pdf', human_plot)
 
 human_plot<-ggplot(combineddf, aes( x=combineddf$length, y = combineddf$occurences, color = combineddf$type)) +   
 <<<<<<< HEAD
+<<<<<<< HEAD
   geom_point() + 
+=======
+  geom_point(aes = ) + 
+>>>>>>> fc8ed0222b2c2448d148e1835a033131476adb6a
 =======
   geom_point(aes = ) + 
 >>>>>>> fc8ed0222b2c2448d148e1835a033131476adb6a

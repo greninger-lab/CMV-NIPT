@@ -10,7 +10,11 @@ for(i in 1:nrow(cmv_ids)){
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 rpkm_values<-read.csv('/Users/gerbix/Documents/vikas/NIPT/new_samples/deduplicated/all_sample_data.csv')
+=======
+rpkm_values<-read.csv('/Users/gerbix/Documents/vikas/NIPT/new_samples/all_sample_data.csv')
+>>>>>>> fc8ed0222b2c2448d148e1835a033131476adb6a
 =======
 rpkm_values<-read.csv('/Users/gerbix/Documents/vikas/NIPT/new_samples/all_sample_data.csv')
 >>>>>>> fc8ed0222b2c2448d148e1835a033131476adb6a
@@ -41,7 +45,10 @@ ggsave( plot = curve, 'cmv_quants.pdf', height = 4, width = 4)
 
 write.csv(rpkm_values, 'rpkm_values_with_quants.csv')
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> fc8ed0222b2c2448d148e1835a033131476adb6a
   
 
 
@@ -50,6 +57,9 @@ write.csv(rpkm_values, 'rpkm_values_with_quants.csv')
 
 
 #Original CMV samples with qCPR data 
+<<<<<<< HEAD
+>>>>>>> fc8ed0222b2c2448d148e1835a033131476adb6a
+=======
 >>>>>>> fc8ed0222b2c2448d148e1835a033131476adb6a
 
 original_cmv<-read.xlsx('/Users/gerbix/Documents/vikas/NIPT/31119_download/qpcr_graph_update/6131_cmv_percent_vs_qpcr_load.xlsx', sheetIndex = 1)
@@ -75,7 +85,11 @@ plot<-ggplot(original_new_combined, aes(x = rpm, y = quant_adjusted, color= time
   #geom_hline(yintercept = 68000) + 
   geom_smooth(method = "lm", se = FALSE, alpha = .5, aes(group=1), color = 'black') + 
 <<<<<<< HEAD
+<<<<<<< HEAD
   scale_color_manual(values = c("#729AF2","#BF6FF7")) + 
+=======
+  scale_color_manual(values = c( "#BEBADA", "#FB8072", "#80B1D3", "#FDB462", "#B3DE69", "#FCCDE5")) + 
+>>>>>>> fc8ed0222b2c2448d148e1835a033131476adb6a
 =======
   scale_color_manual(values = c( "#BEBADA", "#FB8072", "#80B1D3", "#FDB462", "#B3DE69", "#FCCDE5")) + 
 >>>>>>> fc8ed0222b2c2448d148e1835a033131476adb6a
