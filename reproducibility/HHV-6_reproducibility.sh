@@ -29,7 +29,7 @@ done > hhv6_combined_masked_n_removed.fasta
 blastn -query hhv6_combined_masked_n_removed.fasta -db /db/blast_db/nt -num_threads 42 -perc_identity 95 -evalue 1e-5 -out hhv6_vs_full_nt.txt
 
 #Creates count table of BLAST hits to "Human hepesvirus 5" from the BLAST results.
-python blast_hits.py hhv6_masked_blastn_out.txt 'Human herpesvirus 6<b/a>'
+python blast_hits.py hhv6_masked_blastn_out.txt 'Human herpesvirus 6>'
 
 #creates all_sample_data.csv- A table of sample name, FPM, FPKM and read counts
 #file paths inside the script require editing based on how the above commands were run
