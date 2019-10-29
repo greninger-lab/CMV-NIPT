@@ -108,8 +108,8 @@ cumulative_freq_with_human<-ggplot(human_cmv_combined, aes(x = human_cmv_combine
   scale_color_manual(values = getPalette(colourCount)) + 
   xlab('Insert size') + 
   ylab ('Cumulative frequency') + 
-  stat_ecdf(geom = 'step', size  =.5 ) +
-  scale_fill_manual(values = x)
+  stat_ecdf(geom = 'step', size  =.5 ) 
+  #scale_fill_manual(values = x)
 cumulative_freq_with_human
 ggsave(plot = cumulative_freq_with_human, 'cmv_cum_freq_with_human_recolored.pdf', height = 3, width = 3)
 

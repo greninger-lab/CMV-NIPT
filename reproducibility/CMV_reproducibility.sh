@@ -7,7 +7,7 @@ bowtie2 -x <cmv_merlin_reference> -1 <r1.fastq> -2 <r2.fastq> --local --no-unal 
 samtools view -@ <cores> -Sb <aligned.sam> -o <aligned.bam> 
 
 #Deduplicate aligned bam file 
-picard MarkDuplicates I=<aligned.bam> O=<deduplicated.bam> M=<metrics.txt> REMOVE_DUPLICATES= TRUE, ASSUME_SORTED=TRUE, VALIDATION_STRINGENCY= SILENT
+picard MarkDuplicates I=<aligned.bam> O=<deduplicated.bam> M=<metrics.txt> REMOVE_DUPLICATES= TRUE ASSUME_SORTED=TRUE VALIDATION_STRINGENCY= SILENT
 
 #Only keep reads with 34 or more matches and extract reads for repeatmasking and BLAST later.
 ./34m.sh <deduplicated_bam_folder> 
@@ -30,14 +30,6 @@ python blast_hits.py cmv_masked_blastn_out.txt 'Human herpesvirus 5'
 
 #creates all_sample_data.csv- A table of sample name, FPM, FPKM, read counts, and classification (strong vs intermediate positive based on the FPM cutoff of .3)
 #file paths inside the script require editing based on how the above commands were run
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
->>>>>>> fc8ed0222b2c2448d148e1835a033131476adb6a
-=======
-
->>>>>>> fc8ed0222b2c2448d148e1835a033131476adb6a
 rscript --vanilla fpm_calculate.R
 
 #figure 1B
