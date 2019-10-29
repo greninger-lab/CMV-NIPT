@@ -7,7 +7,11 @@ library(svMisc)
 setwd('/Users/gerbix/Documents/vikas/NIPT/all_deduplicated')
 #read_counts <- read.csv("~/Documents/vikas/NIPT/clip_removed/cmv_full/read_counts.csv")
 blast_hits_file<-read.csv('/Users/gerbix/Documents/vikas/NIPT/all_deduplicated/blast_hits.csv', header = FALSE, col.names = c('full_ID','count'))
+<<<<<<< HEAD
+filenames = list.files('/Users/gerbix/Documents/vikas/NIPT/all_deduplicated/original_bams_deduplicated',pattern = '.bam$', full.names = TRUE)
+=======
 filenames = list.files('/Users/gerbix/Documents/vikas/NIPT/all_deduplicated/original_bams_deduplicated',pattern = '.bam$')
+>>>>>>> fc8ed0222b2c2448d148e1835a033131476adb6a
 plotslist<-c()
 
 
@@ -23,7 +27,11 @@ isize<-c()
 read_id<-c()
 sample<-c()
 for(i in 1:length(filenames)){ 
+<<<<<<< HEAD
+  print(i)
+=======
   #print(i)
+>>>>>>> fc8ed0222b2c2448d148e1835a033131476adb6a
   temp_bam<-scanBam(filenames[i])
   if((identical(temp_bam[[1]]$qname, character(0)))){ 
     print(i)

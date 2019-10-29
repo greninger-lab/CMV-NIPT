@@ -1,7 +1,7 @@
 library(svMisc)
 
 setwd('/Users/gerbix/Documents/vikas/NIPT/31119_download/hhv6/host_filtered_hhv6/bams')
-system('$PWD')
+
 read_counts <- read.csv("/Users/gerbix/Documents/vikas/NIPT/31119_download/hhv6/read_counts_all.csv")
 system("for i in *.bam ; do echo processing $i ; samtools view -@ 8 $i | awk '{print $9}' | sort | uniq -c > $i.results.txt ; done")
 #system('')
@@ -59,23 +59,15 @@ for (i in 1:length(filenames)){
       print(filenames[1])
       print(i)
       #ggsave(filename=plotname, device = pdf)
-      savePlot(plot, plotname)
+      #savePlot(plot, plotname)
       dflist[[i]]<-histo
     }
   }
 }
 
+setwd('/Users/gerbix/Documents/vikas/NIPT/nipt_git_repo/reproducibility/HHV-6')
 
-# combined<-data.frame(totaloccurences, totallengths)
-# 
-# plot<-ggplot(combined, aes(y=combined$totaloccurences, x=combined$totallengths)) + 
-#   geom_point() + 
-#   geom_vline(xintercept = mean(combined$totallengths)) +
-#   xlim(0,250) + 
-#   ylab('occurences')+
-#   xlab('length') 
 
-####revised code as of 3/34/19######
 combined <- do.call("rbind", dflist)
 lengthlist<-c()
 samplelist<-c()
@@ -94,49 +86,27 @@ for(i in 1:nrow(combined_expanded)){
 combined_expanded$sample_trimmed<-strsplit(as.character(combined_expanded$samplelist),'_')[[i]][1]
 }
 
-
-
-plot<-ggplot(combined_expanded, aes( x=combined_expanded$lengthlist)) + 
-  geom_histogram(binwidth = 5, aes(fill = combined_expanded$samplelist, y=(100 * ..count../sum(..count..)))) + 
-  #geom_histogram(binwidth = 5, aes(fill=combineddf$sample)) + 
-  #  geom_histogram(binwidth = 5) +
-  #geom_vline(xintercept = median(combineddf$length)) +
-  xlim(0,500) + 
-  ylab('percent')+
-  xlab('length')+
-  labs(colour="file") +
-  theme_classic() +
-  theme(legend.position = 'none') 
-  #theme(legend.position="bottom")
-plot
-
-ggsave(plot=plot, 'hhv6_isizes_stacked_no_legend.pdf', height = 3, width = 3)
-
-
 low_cluster<-c('99P03_C01','120R22_F03','104P04_D01','98P11','97P10_B02','93R20_D03')
 
-combined_expanded$cluster<-"High cluster"
+combined_expanded$cluster<-"High HHV-6"
 for(i in 1:nrow(combined_expanded)){ 
   if(grepl(paste(low_cluster,collapse="|"),combined_expanded$samplelist[i])){ 
-    combined_expanded$cluster[i]<-"Low cluster"
+    combined_expanded$cluster[i]<-"Low HHV-6"
     }
   }
 
 plot<-ggplot(combined_expanded, aes( x=combined_expanded$lengthlist)) + 
   geom_histogram(binwidth = 5, aes(fill = combined_expanded$cluster, y=(100 * ..count../sum(..count..)))) + 
   scale_fill_manual(values=c("orangered", "royalblue2")) + 
-  #geom_histogram(binwidth = 5, aes(fill=combineddf$sample)) + 
-  #  geom_histogram(binwidth = 5) +
-  #geom_vline(xintercept = median(combineddf$length)) +
   xlim(0,500) + 
-  ylab('percent')+
-  xlab('length')+
+  ylab('Percent within each alignment')+
+  xlab('Insert size')+
   labs(colour="file") +
   theme_classic() +
-  theme(legend.position = 'bottom') 
-#theme(legend.position="bottom")
+  theme(legend.position = 'bottom') +
+  labs(fill="")
 plot
-ggsave(plot=plot, 'hhv6_isizes_by_cluster.pdf', height = 3, width = 3)
+ggsave(plot=plot, 'figure_5B.pdf', height = 3, width = 3)
 
 write.csv(combined_expanded, 'hhv6_isizes_all.csv')
 

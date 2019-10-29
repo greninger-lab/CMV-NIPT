@@ -3,6 +3,7 @@ library(Rsamtools)
 library(svMisc)
 library(seqinr)
 library(reshape2)
+library(cowplot)
 
 setwd('/Users/gerbix/Documents/vikas/NIPT/31119_download/resequenced/deduplicating')
 #read_counts <- read.csv("~/Documents/vikas/NIPT/clip_removed/cmv_full/read_counts.csv")
@@ -148,16 +149,21 @@ write.csv(CMV_frequencies,'cmv_duplicates_removed_insert_sizes.csv')
 
 combined<-rbind(human_frequencies,CMV_frequencies)
 
+#red: ED6464
+#blue: 05188B
+
 combined_plot <- ggplot(combined, aes ( x = as.numeric(as.character(combined$isize)), y = as.numeric(as.character(combined$percent)), color = combined$type)) + 
   theme_classic() + 
   theme(legend.position = "none") + 
   #theme_classic() + 
   xlim(c(0,500)) +
+  ylim(c(0,2.5)) +
+  scale_color_manual(values=c("#ED6464", "#05188B")) +
   #geom_vline(xintercept = 168) + 
   #geom_vline(xintercept = 125) + 
   xlab('Insert size') + 
   ylab('Percent within each alignment') + 
-  geom_line() 
+  geom_line(size = .75) 
 combined_plot
 ggsave(plot = combined_plot, 'deduplicated_figure_3a_500bp_1026.pdf', height = 3, width = 3 )
 
@@ -301,10 +307,15 @@ subsampled_df<-rbind(human_subsampled, cmv_isize_df)
 
 cum_frequency<-ggplot(subsampled_df, aes(x = subsampled_df$isizes, color = subsampled_df$type)) + 
   theme_classic() +  
+  scale_color_manual(values=c("#ED6464", "#05188B")) +
   theme(legend.position='none') + 
   xlab('Insert size') + 
   ylab ('Cumulative frequency') + 
+<<<<<<< HEAD
+  stat_ecdf(geom = 'step', size  =.75 ) + 
+=======
   stat_ecdf(geom = 'step', size  =1 ) + 
+>>>>>>> fc8ed0222b2c2448d148e1835a033131476adb6a
   xlim(c(0,500))
 cum_frequency
 ggsave(plot = cum_frequency, 'cmv_deduplicated_cum_frequency_1026.pdf',width = 3, height = 3 )
@@ -313,7 +324,10 @@ ggsave(plot = cum_frequency, 'cmv_deduplicated_cum_frequency_1026.pdf',width = 3
 shapiro.test(subsampled_df$isizes[subsampled_df$type=='human'])
 
 
-
-
+#combined plot #cum_frequency
+#red: ED6464
+#blue: 05188B
+plot_grid(combined_plot, cum_frequency, labels = c('A','B'))
+ggsave(plot = last_plot(), height = 3, width = 6, filename = 'figure_3_grid.pdf')
 
 

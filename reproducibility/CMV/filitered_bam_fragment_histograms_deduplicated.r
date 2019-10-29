@@ -150,7 +150,11 @@ ggsave('human_plot.pdf', human_plot)
 #overlaying plots
 
 human_plot<-ggplot(combineddf, aes( x=combineddf$length, y = combineddf$occurences, color = combineddf$type)) +   
+<<<<<<< HEAD
+  geom_point() + 
+=======
   geom_point(aes = ) + 
+>>>>>>> fc8ed0222b2c2448d148e1835a033131476adb6a
   #geom_histogram(binwidth = 5) + 
   #  geom_histogram(binwidth = 5) +
   #geom_vline(xintercept = median(combineddf$length)) +
