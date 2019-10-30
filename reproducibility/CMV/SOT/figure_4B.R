@@ -82,15 +82,16 @@ human_isize_df$type<-'Human'
 
 combined_isize_df<-rbind(human_isize_df, cmv_df)
 
-cmv_plot<-ggplot(combined_isize_df, aes( x=as.numeric(as.character(combined_isize_df$Var1)), y = as.numeric(as.character(combined_isize_df$percent)),color = combined_isize_df$type)) +
+cmv_plot_4b<-ggplot(combined_isize_df, aes( x=as.numeric(as.character(combined_isize_df$Var1)), y = as.numeric(as.character(combined_isize_df$percent)),color = combined_isize_df$type)) +
   geom_line() + 
   xlim(0,500) + 
   ylim(0,2.5) + 
+  scale_color_manual(values=c("#ED6464", "#05188B")) +
   ylab('percent')+
   xlab('insert size')+
   theme_classic() +
   theme(legend.position = 'none') 
-cmv_plot
+cmv_plot_4b
 
-ggsave(plot = cmv_plot, 'figure_4B.pdf', height = 3, width = 3)
-save.image("~/Documents/vikas/NIPT/nipt_git_repo/reproducibility/CMV/SOT/Untitled.RData")
+ggsave(plot = cmv_plot_4b, 'figure_4B.pdf', height = 3, width = 3)
+save.image("~/Documents/vikas/NIPT/nipt_git_repo/reproducibility/CMV/SOT/figure_4B.Rdata")

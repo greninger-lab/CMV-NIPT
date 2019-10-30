@@ -29,7 +29,12 @@ done > hhv6_combined_masked_n_removed.fasta
 blastn -query hhv6_combined_masked_n_removed.fasta -db /db/blast_db/nt -num_threads 42 -perc_identity 95 -evalue 1e-5 -out hhv6_vs_full_nt.txt
 
 #Creates count table of BLAST hits to "Human hepesvirus 5" from the BLAST results.
-python blast_hits.py hhv6_masked_blastn_out.txt 'Human herpesvirus 6>'
+python blast_hits.py hhv6_masked_blastn_out.txt '<Human herpesvirus 6>'
+
+#Creates BAMs with just the verified reads 
+#run from within folder of filtered bams for both HHV-6A and HHV-6B (./34m.sh step)
+uw-virongs-vikas:verified_sams gerbix$ python verified_bam.py blast_hits<HHV6a/b>.csv <suffix for filtered bams> 
+
 
 #creates all_sample_data.csv- A table of sample name, FPM, FPKM and read counts
 #file paths inside the script require editing based on how the above commands were run
@@ -37,6 +42,7 @@ rscript --vanilla fpm_calculate.R
 
 #for the scripts below file paths will have to be changed from the ones used on our local machine
 #figure 5 inidividual figures
+#path to any bams should be from the verified bams folder
 rscript --vanilla figure_5A.r
 rscript --vanilla figure_5B.r
 rscript --vanilla figure_5C.r

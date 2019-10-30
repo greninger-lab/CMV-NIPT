@@ -11,6 +11,6 @@ load(file = '/Users/gerbix/Documents/vikas/NIPT/nipt_git_repo/reproducibility/CM
 load(file='/Users/gerbix/Documents/vikas/NIPT/nipt_git_repo/reproducibility/CMV/SOT/figure_4B.rdata')
 load(file='/Users/gerbix/Documents/vikas/NIPT/nipt_git_repo/reproducibility/CMV/SOT/figure_4C.rdata')
 
-plot_grid(plot,cmv_plot, cumulative_freq_with_human ,labels = c('A','B','C'), ncol = 3)
+plot_grid(plot,cmv_plot_4b, cumulative_freq_with_human ,labels = c('A','B','C'), ncol = 3)
 ggsave(plot = last_plot(), height = 3, width = 8, filename = 'figure_4.pdf')
   

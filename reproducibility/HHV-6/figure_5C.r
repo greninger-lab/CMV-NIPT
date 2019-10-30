@@ -2,7 +2,7 @@ library(ggplot2)
 
 #pulled human insert sizes from NIPT CMV sample 3P13
 setwd('/Users/gerbix/Documents/vikas/NIPT/nipt_git_repo/reproducibility/HHV-6')
-filenames = '/Volumes/Seagate8Tb1/nipt/bams/bams_for_vikas/3P13_E02_CFFv1_NB0015.final.bam.read_length_counts.txt'
+filenames = '/Users/gerbix/Documents/vikas/NIPT/nipt_git_repo/reproducibility/HHV-6/3P13_read_lengths.txt'
 
 dflist<-c()
 statslist<-c()
@@ -31,7 +31,6 @@ for (i in 1:length(filenames)){
 human_frequencies <- do.call("rbind", dflist)
 lengthlist<-c()
 samplelist<-c()
-read_counts$sample<-as.character(read_counts$sample)
 
 human_frequencies$percent<-(100 * human_frequencies$freq) / (sum(human_frequencies$freq))
 
@@ -62,7 +61,6 @@ human_isize$type<-'Human'
 human_hhv6_combined<-rbind(human_isize,hhv_6_isize)
 
 
-
 cum_frequency<-ggplot(human_hhv6_combined, aes(x = human_hhv6_combined$length, color = human_hhv6_combined$type)) + 
   theme_classic() +  
   theme(legend.position='none') + 
@@ -76,15 +74,9 @@ plot(ecdf(combined$length))
 plot(ecdf(human_isize_expanded), add = TRUE, col = 2 )
 plot(ecdf(cmv))
 
-
-
 for(i in 1:nrow(human_hhv6_combined)){ 
   if(human_hhv6_combined$type=='H')
 }
-
-
-
-###########
 
 uniques<-unique(combineddf$sample)
 
@@ -93,15 +85,7 @@ for(i in 1:length(uniques)){
   print( nrow(combineddf[combineddf$sample==uniques[i],]))
 }
 
-#99P03_C01
-#120R22_F03
-#104P04_D01
-#98p11
-#97P10_B02
-#93R20_D03
-
 to_remove<-c('99P03_C01','120R22_F03','104P04_D01','98P11','97P10_B02','93R20_D03')
-
 
 lowclusterremoved<-combineddf[-which(grepl(paste(to_remove,collapse="|"),combineddf$sample)),]
 
