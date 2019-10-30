@@ -20,11 +20,10 @@ setwd('/Users/gerbix/Documents/vikas/NIPT/nipt_git_repo/reproducibility/HHV-6')
 
 data<-read.csv('/Users/gerbix/Documents/vikas/NIPT/31119_download/hhv6/read_counts_all_deduplicated.csv')
 
-edarpath<-'/Users/gerbix/Documents/vikas/NIPT/31119_download/hhv6/edar'
-rpp30path<-'rpp30'
-betaglobinpath<-'/Users/gerbix/Documents/vikas/NIPT/31119_download/hhv6/bglobin'
-hhv6apath<-'/Users/gerbix/Documents/vikas/NIPT/31119_download/hhv6/hhv6a'
-hhv6bpath<-'/Users/gerbix/Documents/vikas/NIPT/31119_download/hhv6/hhv6b'
+edarpath<-'/Users/gerbix/Documents/vikas/NIPT/hhv6/figure_5a/edar/bams/sorted/deduplicated'
+betaglobinpath<-'/Users/gerbix/Documents/vikas/NIPT/hhv6/figure_5a/bglobin/bams/sorted/deduplicated'
+hhv6apath<-'/Users/gerbix/Documents/vikas/NIPT/hhv6/figure_5a/6a_verified_sams/bams'
+hhv6bpath<-'/Users/gerbix/Documents/vikas/NIPT/hhv6/figure_5a/6b_verified_sams/bams'
 
 
 depthcounter<-function(paths,start,stop) {
@@ -96,7 +95,7 @@ colnames(hhv6adf)[2]<-'names'
 hhv6adf$depth<-(hhv6adf$counts * 76)/(hhv6astop-hhv6astart)
 hhv6adf$read_counts<-NA
 for ( i in 1:nrow(hhv6adf)){ 
-  tempname<-strsplit(as.character(hhv6adf$names[i]), '.sam')[[1]][1]
+  tempname<-strsplit(as.character(hhv6adf$names[i]), '.filtered')[[1]][1]
   print(tempname)
   hhv6adf$read_counts[i]<-data$count[which(grepl(tempname,data$sample))]
 }
@@ -115,7 +114,7 @@ colnames(hhv6bdf)[2]<-'names'
 hhv6bdf$depth<-(hhv6bdf$counts * 76)/(hhv6bstop-hhv6bstart)
 hhv6bdf$read_counts<-NA
 for ( i in 1:nrow(hhv6bdf)){ 
-  tempname<-strsplit(as.character(hhv6bdf$names[i]), '.sam')[[1]][1]
+  tempname<-strsplit(as.character(hhv6bdf$names[i]), '.filtered')[[1]][1]
   print(tempname)
   hhv6bdf$read_counts[i]<-data$count[which(grepl(tempname,data$sample))]
 }
@@ -165,7 +164,7 @@ write.csv(allcombined, 'hhv6_cfdna_info.csv')
 allcombined$rpkm_adjusted<-allcombined$rpkm / max(allcombined$rpkm)
 allcombined$color<-NA
 allcombined$color[allcombined$rpkm_adjusted < .1] = 'blue'
-allcombined$color[allcombined$rpkm_adjusted > .1  & allcombined$rpkm_adjusted < .35] = 'red'
+allcombined$color[allcombined$rpkm_adjusted > .1  & allcombined$rpkm_adjusted < .8] = 'red'
 allcombined$color[allcombined$type=="Beta globin" | allcombined$type=="EDAR"]<-'green'
 
 

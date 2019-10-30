@@ -1,10 +1,9 @@
 library(svMisc)
 
-setwd('/Users/gerbix/Documents/vikas/NIPT/31119_download/hhv6/host_filtered_hhv6/bams')
+setwd('/Users/gerbix/Documents/vikas/NIPT/hhv6/figure_5b/6a_verified_sams/bams')
 
-read_counts <- read.csv("/Users/gerbix/Documents/vikas/NIPT/31119_download/hhv6/read_counts_all.csv")
+read_counts <- read.csv("/Users/gerbix/Documents/vikas/NIPT/hhv6/figure_5b/read_counts_all_deduplicated.csv")
 system("for i in *.bam ; do echo processing $i ; samtools view -@ 8 $i | awk '{print $9}' | sort | uniq -c > $i.results.txt ; done")
-#system('')
 filenames = list.files(pattern = '*.bam.results.txt$')
 plotslist<-c()
 

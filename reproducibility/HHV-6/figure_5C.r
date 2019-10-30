@@ -1,6 +1,6 @@
 library(ggplot2)
 
-###121r04 human 
+#pulled human insert sizes from NIPT CMV sample 3P13
 setwd('/Users/gerbix/Documents/vikas/NIPT/nipt_git_repo/reproducibility/HHV-6')
 filenames = '/Volumes/Seagate8Tb1/nipt/bams/bams_for_vikas/3P13_E02_CFFv1_NB0015.final.bam.read_length_counts.txt'
 
@@ -10,7 +10,6 @@ totallengths<-c()
 totaloccurences<-c()
 for (i in 1:length(filenames)){ 
   print(i)
-  #print(filenames[i])
   if (file.size(filenames[i]) != 0) {
     histo<- read.table(filenames[i], quote="\"", comment.char="")
     colnames(histo)[2]<-'isize'
@@ -46,8 +45,8 @@ human_frequencies$isize<-as.numeric(as.character(human_frequencies$isize))
 
 
 ###hhv6 isizes
-hhv_6_combined<-read.csv('/Users/gerbix/Documents/vikas/NIPT/31119_download/figure_2_final/71719/hhv6_isizes_all.csv')
-
+hhv_6_combined<-read.csv('/Users/gerbix/Documents/vikas/NIPT/nipt_git_repo/reproducibility/HHV-6/hhv6_isizes_all.csv')
+ 
 hhv6_ks_test<-ks.test(human_isize_expanded,hhv_6_combined$lengthlist)
 hhv6_ks_test
 
