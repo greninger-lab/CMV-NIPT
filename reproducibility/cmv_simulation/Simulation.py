@@ -1,13 +1,13 @@
 import random
-output = open("MultiSampleRead3Probe350.txt", "w")
+output = open("MultiSampleRead3Probe350_alex.txt", "w")
 
 probelen = 350
 probestart = random.randint(1, 235149 - probelen)
 probestop = probestart + probelen - 1
 
-for a in range (0, 1000):
+for a in range (0, 100):
         print(str(a))
-        input1 = open("MultiSampleRead3.txt", "r")  #1st column read length, 2nd colum number of reads
+        input1 = open("Sample2Read3_alex.txt", "r")  #1st column read length, 2nd colum number of reads
 
         readstart = []
         readstop = []
