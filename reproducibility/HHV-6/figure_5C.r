@@ -121,6 +121,7 @@ cum_frequency<-ggplot(all_combined, aes(x = all_combined$lengthlist, color = all
   theme_classic() +
   theme(legend.title = element_blank()) +
   xlim(0,500) + 
+  scale_color_manual(values = c( '#436EEE','#077524', '#FF4500')) + 
   theme(legend.position='bottom') + 
   xlab('Insert size') + 
   ylab ('Cumulative frequency') 

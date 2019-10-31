@@ -1,7 +1,7 @@
 #Workflow for generating CMV figures 
 
 #Bowtie2 alignment to CMV Merlin genome (NC_006273.2)
-bowtie2 -x <hhv-6_reference> -1 <r1.fastq> -2 <r2.fastq> --local --no-unal -p <cores> -S <aligned.sam> 
+bowtie2 -x <hhv-6a/b_reference> -1 <r1.fastq> -2 <r2.fastq> --local --no-unal -p <cores> -S <aligned.sam> 
 
 #Convert SAM to BAM 
 samtools view -@ <cores> -Sb <aligned.sam> -o <aligned.bam> 
