@@ -17,8 +17,9 @@ figure_1b_plot_fpm<-ggplot(df_for_graph, aes(x=fpm, fill = classification)) +
   scale_fill_manual(labels = c( "RPM < 0.3", "RPM > 0.3"),values = c('#BEBADA',"#E27184")) +
   theme(legend.title=element_blank())+ 
   theme(legend.position = c(0.8, 0.8))+
-  xlab('FPM of Fragments') + 
-  ylab('Number of samples containing this FPM') + 
+  xlab('FPM') + 
+  ylab('Number of samples') + 
+  theme(text = element_text(size=10))+ 
   scale_y_continuous(expand = c(0,0), breaks = int_breaks)
 figure_1b_plot_fpm
 ggsave(plot=figure_1b_plot_fpm, filename = 'figure_1b.pdf', height= 4, width = 4, useDingbats=FALSE)

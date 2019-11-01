@@ -5,7 +5,7 @@ library(seqinr)
 library(reshape2)
 library(cowplot)
 
-setwd('/Users/gerbix/Documents/vikas/NIPT/nipt_git_repo/reproducibility/CMV')
+setwd('/Users/gerbix/Documents/vikas/NIPT/nipt_git_repo/reproducibility/CMV/maternal')
 
 # modify to include the resequenced 121r04 frequency table
 filenames = '/Volumes/Seagate8Tb1/resquenced_121R04_D01_CFFv1_NB0222/aligned_to_hg38/duplicates_removed_read_lengths.txt'
@@ -40,7 +40,6 @@ for (i in 1:length(filenames)){
 human_frequencies <- do.call("rbind", dflist)
 lengthlist<-c()
 samplelist<-c()
-read_counts$sample<-as.character(read_counts$sample)
 
 human_frequencies$percent<-(100 * human_frequencies$freq) / (sum(human_frequencies$freq))
 
@@ -135,15 +134,15 @@ combined<-rbind(human_frequencies,CMV_frequencies)
 
 combined_plot <- ggplot(combined, aes ( x = as.numeric(as.character(combined$isize)), y = as.numeric(as.character(combined$percent)), color = combined$type)) + 
   theme_classic() + 
-  theme(legend.position = "none") + 
-  #theme_classic() + 
   xlim(c(0,500)) +
   ylim(c(0,2.5)) +
   scale_color_manual(values=c("#ED6464", "#05188B")) +
-  #geom_vline(xintercept = 168) + 
-  #geom_vline(xintercept = 125) + 
-  xlab('Insert size') + 
+  theme(legend.title=element_blank())+ 
+  theme(legend.position = c(.8,.6)) + 
+  xlab('Fragment size') + 
+  theme(legend.position = c(0.8, 0.6)) + 
   ylab('Percent within each alignment') + 
+  theme(text = element_text(size=10)) +
   geom_line(size = .75) 
 combined_plot
 
@@ -226,11 +225,14 @@ subsampled_df<-rbind(human_subsampled, cmv_isize_df)
 
 cum_frequency<-ggplot(subsampled_df, aes(x = subsampled_df$isizes, color = subsampled_df$type)) + 
   theme_classic() +  
-  scale_color_manual(values=c("#ED6464", "#05188B")) +
-  theme(legend.position='none') + 
-  xlab('Insert size') + 
+  scale_color_manual(values=c("#ED6464", "#05188B"), labels = c("CMV", "Human")) +
+  theme(legend.position='bottom') + 
+  xlab('Fragment size') + 
+  theme(legend.position = c(0.8, 0.6)) + 
   ylab ('Cumulative frequency') + 
+  theme(legend.title=element_blank())+ 
   stat_ecdf(geom = 'step', size  =.75 ) + 
+  theme(text = element_text(size=10)) +
   xlim(c(0,500))
 cum_frequency
 ggsave(plot = cum_frequency, 'cmv_deduplicated_cum_frequency_1026.pdf',width = 3, height = 3 )

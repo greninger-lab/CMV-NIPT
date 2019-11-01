@@ -54,20 +54,27 @@ library(RColorBrewer)
 getPalette = colorRampPalette(brewer.pal(8, "Set3"))
 colourCount = length(unique(original_new_combined$time))
 
+
+scientific_10 <- function(x) {
+  parse(text=gsub("e", " %*% 10^", scales::scientific_format()(x)))
+}
+
+r2=summary(lm(rpm ~ quant_adjusted, data=original_new_combined))
 plot<-ggplot(original_new_combined, aes(x = rpm, y = quant_adjusted, color= time)) + 
   geom_point() +
-  scale_y_log10(breaks = c( 1, 10, 100, 1000, 10000,100000))+ 
-  scale_x_log10(limits = c(.01, 100)) + 
+  scale_y_log10(breaks = c( 1, 10, 100, 1000, 10000,100000), labels = scientific_10)+ 
+  scale_x_log10(limits = c(.01, 100), labels =scientific_10)+  
   ylab('CMV copies/mL') + 
   xlab('CMV FPM') + 
   geom_smooth(method = "lm", se = FALSE, alpha = .5, aes(group=1), color = 'black') + 
-  scale_color_manual(values = c("#729AF2","#BF6FF7")) + 
+  scale_color_manual(values = c("#729AF2","#BF6FF7"), labels = c("Maternal", "SOT")) + 
   theme_classic()  + 
-  theme(legend.title=element_blank(), legend.position = 'none') 
+  annotate("text", x = 15  , y =.25, label = paste0('R^2 = ',signif(r2$adj.r.squared,digits = 2 ))) +
+  theme(text = element_text(size=10)) + 
+  theme(legend.title=element_blank(), legend.position = c(.8,.2)) 
 plot
 ggsave(plot = plot, 'figure_4a.pdf', height = 3, width = 3)
 
-summary(lm(rpm ~ quant_adjusted, data=original_new_combined))
 save.image("~/Documents/vikas/NIPT/nipt_git_repo/reproducibility/CMV/SOT/figure_4A.rdata")
 
 

@@ -86,12 +86,15 @@ cmv_plot_4b<-ggplot(combined_isize_df, aes( x=as.numeric(as.character(combined_i
   geom_line() + 
   xlim(0,500) + 
   ylim(0,2.5) + 
-  scale_color_manual(values=c("#ED6464", "#05188B")) +
+  scale_color_manual(values=c("#ED6464", "#05188B"), labels = c("CMV", "Human")) +
+  theme(legend.position = c(0.8, 0.6)) + 
   ylab('percent')+
   xlab('insert size')+
   theme_classic() +
-  theme(legend.position = 'none') 
-cmv_plot_4b
+  theme(legend.position = c(0.8, 0.6)) + 
+  theme(legend.title=element_blank())+ 
+  
+  cmv_plot_4b
 
 ggsave(plot = cmv_plot_4b, 'figure_4B.pdf', height = 3, width = 3)
 save.image("~/Documents/vikas/NIPT/nipt_git_repo/reproducibility/CMV/SOT/figure_4B.Rdata")
