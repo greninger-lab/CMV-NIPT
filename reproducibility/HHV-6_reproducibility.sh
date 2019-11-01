@@ -7,7 +7,7 @@ bowtie2 -x <hhv-6a/b_reference> -1 <r1.fastq> -2 <r2.fastq> --local --no-unal -p
 samtools view -@ <cores> -Sb <aligned.sam> -o <aligned.bam> 
 
 #sort BAM for picard
-samtools sort <aligned.bam> -o <sorted.bam> 
+samtools sort <aligned.bam> <sorted.bam> 
 
 #Deduplicate aligned bam file 
 picard MarkDuplicates I=<sorted.bam> O=<deduplicated.bam> M=<metrics.txt> REMOVE_DUPLICATES= TRUE ASSUME_SORTED=TRUE VALIDATION_STRINGENCY= SILENT
