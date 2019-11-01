@@ -99,16 +99,19 @@ plot<-ggplot(combined_expanded, aes( x=combined_expanded$lengthlist)) +
   scale_fill_manual(values=c("orangered", "royalblue2")) + 
   xlim(0,500) + 
   ylab('Percent within each alignment')+
-  xlab('Insert size')+
+  xlab('Fragment size')+
   labs(colour="file") +
   theme_classic() +
-  theme(legend.position = 'bottom') +
-  labs(fill="")
+  #theme(legend.position = 'bottom') +
+  labs(fill="") +
+  theme(text = element_text(size=10)) +
+  theme(legend.position = c(0.8, 0.3)) + 
+  theme(legend.title=element_blank())
 plot
 ggsave(plot=plot, 'figure_5B.pdf', height = 3, width = 3)
 
 write.csv(combined_expanded, 'hhv6_isizes_all.csv')
 
-
+save.image(file = 'figure_5B.rdata')
 
 

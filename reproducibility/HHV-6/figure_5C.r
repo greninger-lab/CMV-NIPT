@@ -117,17 +117,19 @@ human_isizes_all$cluster<-'Human'
 all_combined<-rbind(human_isizes_all, hhv6_isizes_all)
 
 cum_frequency<-ggplot(all_combined, aes(x = all_combined$lengthlist, color = all_combined$cluster)) + 
-  stat_ecdf(geom = 'step', size  =1 , show.legend = TRUE) + 
+  stat_ecdf(geom = 'step', size  =1 , show.legend = TRUE, pad = FALSE) + 
   theme_classic() +
   theme(legend.title = element_blank()) +
+  theme(text = element_text(size=10)) +
+  theme(legend.position = c(0.8, 0.3)) + 
+  theme(legend.title=element_blank()) +
   xlim(0,500) + 
-  scale_color_manual(values = c( '#436EEE','#077524', '#FF4500')) + 
-  theme(legend.position='bottom') + 
-  xlab('Insert size') + 
+  scale_color_manual(values = c( '#FF4500','#077524','#436EEE')) + 
+  xlab('Fragment size') + 
   ylab ('Cumulative frequency') 
 cum_frequency
 
 # saving plot crashes R 
 # ggsave(cum_frequency, 'figure_5C.pdf', height = 3 , width = 3)
 
-
+save.image(file= 'figure_5C.Rdata')

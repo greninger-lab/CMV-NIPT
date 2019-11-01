@@ -176,10 +176,12 @@ p5 <- ggplot(allcombined, aes(x=factor(type),y=rpkm_adjusted, color=allcombined$
   theme(legend.position = 'none') + 
   xlab('gene') +
   ylab('normalized depth') +
-  scale_y_continuous(trans='log10') 
+  scale_y_continuous(trans='log10') +
+  theme(text = element_text(size=10)) 
 p5
 ggsave('figure_5A.pdf', p5, width = 3, height = 3)
 
+save.image(file = 'figure_5A.rdata')
 
 
 
