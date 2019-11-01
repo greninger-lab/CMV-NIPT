@@ -80,7 +80,7 @@ human_df$sample<-'P16_Human'
 human_df$read_id<-'eh'
 
 
-human_df<-human_df[human_df$isize < 1000,]
+human_df<-human_df[human_df$isize < 500,]
 human_cmv_combined<-rbind(human_df,combined_trimmed)
 library(RColorBrewer)
 getPalette = colorRampPalette(brewer.pal(8, "Set3"))
@@ -97,18 +97,23 @@ cmv_cumulative_frequency<-ggplot(combined_trimmed, aes(x = isize, color = sample
 cmv_cumulative_frequency
 
 
-colors<-c("#8DD3C7", "#FFFFB3" ,"#BEBADA" ,"#FB8072", "#80B1D3" ,"#FDB462" ,"#B3DE69" ,"#05188B")
+colors<-c("#8DD3C7", "#F4EB42" ,"#BEBADA" ,"#FB8072", "#80B1D3" ,"#FDB462" ,"#B3DE69" ,"#05188B")
 cumulative_freq_with_human<-ggplot(human_cmv_combined, aes(x = human_cmv_combined$isize, color = human_cmv_combined$sample)) + 
   theme_classic() +  
-  theme(legend.position='none') + 
-  scale_color_manual(values = colors) + 
-  xlab('Insert size') + 
+  scale_color_manual(values = colors, labels= c('P12','P13','P14','P15','P16','P17','P18','P16 (Human)')) + 
+  xlab('Fragment size') + 
+  theme(legend.title=element_blank()) + 
+  theme(text = element_text(size=10)) +
+  theme(legend.text=element_text(size=6)) +
+  xlim(c(0,500)) +
+  #geom_vline(xintercept = 500) +
+  theme(legend.position = c(0.8, 0.3)) + 
   ylab ('Cumulative frequency') + 
-  stat_ecdf(geom = 'step', size  =.5 ) 
+  theme(legend.key.size = unit(.3, "cm")) + 
+  stat_ecdf(geom = 'step', size  =.5, pad = FALSE) 
 cumulative_freq_with_human
 ggsave(plot = cumulative_freq_with_human, 'figure_4c.pdf', height = 3, width = 3)
 save.image("~/Documents/vikas/NIPT/nipt_git_repo/reproducibility/CMV/SOT/figure_4c.rdata")
-
 
 
 

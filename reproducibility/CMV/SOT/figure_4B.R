@@ -89,11 +89,11 @@ cmv_plot_4b<-ggplot(combined_isize_df, aes( x=as.numeric(as.character(combined_i
   scale_color_manual(values=c("#ED6464", "#05188B"), labels = c("CMV", "Human")) +
   theme(legend.position = c(0.8, 0.6)) + 
   ylab('percent')+
-  xlab('insert size')+
+  xlab('Fragment size')+
   theme_classic() +
+  theme(text = element_text(size=10)) +
   theme(legend.position = c(0.8, 0.6)) + 
-  theme(legend.title=element_blank())+ 
-  
+  theme(legend.title=element_blank())
   cmv_plot_4b
 
 ggsave(plot = cmv_plot_4b, 'figure_4B.pdf', height = 3, width = 3)
