@@ -104,7 +104,7 @@ plot<-ggplot(combined_expanded, aes( x=combined_expanded$lengthlist)) +
   theme_classic() +
   #theme(legend.position = 'bottom') +
   labs(fill="") +
-  theme(text = element_text(size=10)) +
+  theme(text = element_text(size=8)) +
   theme(legend.position = c(0.8, 0.3)) + 
   theme(legend.title=element_blank())
 plot

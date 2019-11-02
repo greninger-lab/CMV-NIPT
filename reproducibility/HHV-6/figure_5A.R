@@ -52,7 +52,7 @@ bglobin<-depthcounter(betaglobinpath,bglobinstart,bglobinstop)
 bglobincounts<-bglobin[1]
 bglobinnames<-bglobin[2]
 bglobindf<-data.frame(bglobincounts,bglobinnames)
-bglobindf$type<-'Beta globin'
+bglobindf$type<-'Beta-globin'
 colnames(bglobindf)[1]<-'counts'
 colnames(bglobindf)[2]<-'names'
 bglobindf$depth<-(bglobindf$counts * 76)/(bglobinstop-bglobinstart)
@@ -165,19 +165,20 @@ allcombined$rpkm_adjusted<-allcombined$rpkm / max(allcombined$rpkm)
 allcombined$color<-NA
 allcombined$color[allcombined$rpkm_adjusted < .1] = 'blue'
 allcombined$color[allcombined$rpkm_adjusted > .1  & allcombined$rpkm_adjusted < .8] = 'red'
-allcombined$color[allcombined$type=="Beta globin" | allcombined$type=="EDAR"]<-'green'
+allcombined$color[allcombined$type=="Beta-globin" | allcombined$type=="EDAR"]<-'green'
 
 
 p5 <- ggplot(allcombined, aes(x=factor(type),y=rpkm_adjusted, color=allcombined$color))+
   scale_color_manual(values = c( '#436EEE','#077524', '#FF4500')) + 
   geom_jitter(width = .3, size = 1) +
-  labs(title="Average Coverage", color = 'Target') + 
+  #labs(title="Average Coverage", color = 'Target') + 
   theme_bw() +
   theme(legend.position = 'none') + 
-  xlab('gene') +
+  #xlab('') +
   ylab('normalized depth') +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1),axis.title.x=element_blank())+ 
   scale_y_continuous(trans='log10') +
-  theme(text = element_text(size=10)) 
+  theme(text = element_text(size=8)) 
 p5
 ggsave('figure_5A.pdf', p5, width = 3, height = 3)
 

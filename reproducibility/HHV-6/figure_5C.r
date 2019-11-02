@@ -45,7 +45,9 @@ human_frequencies$isize<-as.numeric(as.character(human_frequencies$isize))
 
 ###hhv6 isizes
 hhv_6_combined<-read.csv('/Users/gerbix/Documents/vikas/NIPT/nipt_git_repo/reproducibility/HHV-6/hhv6_isizes_all.csv')
- 
+
+hhv6_combined<-hhv_6_combined[hhv_6_combined$lengthlist<500,]
+
 hhv6_ks_test<-ks.test(human_isize_expanded,hhv_6_combined$lengthlist)
 hhv6_ks_test
 
@@ -103,7 +105,7 @@ plot(ecdf(lowclusteronly$length), add = TRUE, col = 3 )
 ks.test(human_isize_expanded, combineddf$length)
 
 hhv6_isizes_all<-read.csv('/Users/gerbix/Documents/vikas/NIPT/nipt_git_repo/reproducibility/HHV-6/hhv6_isizes_all.csv')
-
+hhv6_isizes_all<-hhv6_isizes_all[hhv6_isizes_all$lengthlist<500,]
 
 human_isizes_all<-data.frame(human_isize$length)
 colnames(human_isizes_all)[1]<-'lengthlist'
@@ -132,4 +134,21 @@ cum_frequency
 # saving plot crashes R 
 # ggsave(cum_frequency, 'figure_5C.pdf', height = 3 , width = 3)
 
+
+
+cum_frequency<-ggplot(x, aes(x = x$lengthlist, color = x$cluster)) + 
+  stat_ecdf(geom = 'step', size  =1 , show.legend = TRUE, pad = FALSE) + 
+  theme_classic() +
+  theme(legend.title = element_blank()) +
+  theme(text = element_text(size=8)) +
+  theme(legend.position = c(0.8, 0.3)) + 
+  theme(legend.title=element_blank()) +
+  xlim(0,500) + 
+  scale_color_manual(values = c('#077524', '#FF4500','#436EEE')) + 
+  xlab('Fragment size') + 
+  ylab ('Cumulative frequency') 
+cum_frequency
+
+
 save.image(file= 'figure_5C.Rdata')
+

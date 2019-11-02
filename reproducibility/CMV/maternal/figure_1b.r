@@ -14,7 +14,7 @@ figure_1b_plot_fpm<-ggplot(df_for_graph, aes(x=fpm, fill = classification)) +
    geom_histogram(bins = 45, color = 'black') +  
   scale_x_log10() + 
   theme_classic() +
-  scale_fill_manual(labels = c( "RPM < 0.3", "RPM > 0.3"),values = c('#BEBADA',"#E27184")) +
+  scale_fill_manual(labels = c( "FPM < 0.3", "FPM > 0.3"),values = c('#BEBADA',"#E27184")) +
   theme(legend.title=element_blank())+ 
   theme(legend.position = c(0.8, 0.8))+
   xlab('FPM') + 
