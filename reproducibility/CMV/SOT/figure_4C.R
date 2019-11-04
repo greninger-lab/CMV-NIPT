@@ -103,7 +103,7 @@ cumulative_freq_with_human<-ggplot(human_cmv_combined, aes(x = human_cmv_combine
   scale_color_manual(values = colors, labels= c('P12','P13','P14','P15','P16','P17','P18','P16 (Human)')) + 
   xlab('Fragment size') + 
   theme(legend.title=element_blank()) + 
-  theme(text = element_text(size=10)) +
+  theme(text = element_text(size=8)) +
   theme(legend.text=element_text(size=6)) +
   xlim(c(0,500)) +
   #geom_vline(xintercept = 500) +

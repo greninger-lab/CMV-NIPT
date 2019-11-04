@@ -91,6 +91,11 @@ weak_positives_reads<-c()
 
 #convert reads to fragments based on unique identifiers in the blast file
 blasthitsfile<-blasthitsfile[which(!(duplicated(blasthitsfile$unique_identifier))),]
+blasthitsfile<-blasthitsfile[-which(blasthitsfile$full_readname=='121R27_C04_CFFv1_NA0147.37.fasta-:23112:19889:5382'),]
+
+
+
+
 
 #matches read IDs back to their original SAM files 
 unique_file_list<-unique(blasthitsfile$sample_id)

@@ -141,8 +141,8 @@ combined_plot <- ggplot(combined, aes ( x = as.numeric(as.character(combined$isi
   theme(legend.position = c(.8,.6)) + 
   xlab('Fragment size') + 
   theme(legend.position = c(0.8, 0.6)) + 
-  ylab('Percent within each alignment') + 
-  theme(text = element_text(size=10)) +
+  ylab('Percent') + 
+  theme(text = element_text(size=8)) +
   geom_line(size = .75) 
 combined_plot
 
@@ -166,7 +166,7 @@ for(i in 1:10000){
 
 testsdf<-data.frame(tests)
 
-#CMV is in 14th percentile of human insert size distribution
+#CMVpercentile of human insert size distribution
 human_percentile<-ecdf(human_isize_expanded)
 cmv_med_percentile<-human_percentile(median(CMV_isize_exanded)) * 100
 
@@ -232,7 +232,7 @@ cum_frequency<-ggplot(subsampled_df, aes(x = subsampled_df$isizes, color = subsa
   ylab ('Cumulative frequency') + 
   theme(legend.title=element_blank())+ 
   stat_ecdf(geom = 'step', size  =.75, pad = FALSE) + 
-  theme(text = element_text(size=10)) +
+  theme(text = element_text(size=8)) +
   xlim(c(0,500))
 cum_frequency
 ggsave(plot = cum_frequency, 'cmv_deduplicated_cum_frequency_1026.pdf',width = 3, height = 3 )

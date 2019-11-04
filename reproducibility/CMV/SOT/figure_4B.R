@@ -91,7 +91,7 @@ cmv_plot_4b<-ggplot(combined_isize_df, aes( x=as.numeric(as.character(combined_i
   ylab('percent')+
   xlab('Fragment size')+
   theme_classic() +
-  theme(text = element_text(size=10)) +
+  theme(text = element_text(size=8)) +
   theme(legend.position = c(0.8, 0.6)) + 
   theme(legend.title=element_blank())
   cmv_plot_4b
