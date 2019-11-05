@@ -6,7 +6,7 @@ library(svMisc)
 library(ggplot2)
 library(xlsx)
 
-setwd('/Users/gerbix/Documents/vikas/NIPT/nipt_git_repo/reproducibility')
+setwd('/Users/gerbix/Documents/vikas/NIPT/nipt_git_repo/reproducibility/CMV/maternal/fragment_patch')
 
 #Provide the blast hit count table here 
 blasthitsfile<-read.csv('/Users/gerbix/Documents/vikas/NIPT/all_deduplicated/blast_hits.csv')
@@ -37,11 +37,11 @@ for(i in 1:nrow(blasthitsfile)){
   blasthitsfile$sample_id[i]<-strsplit(blasthitsfile$readname[i],'[.]')[[1]][1]
   }
 blasthitsfile$fragments<-1
-fragment_indexes<-which(duplicated(blasthitsfile$unique_identifier))
-for(i in 1:length(fragment_indexes)){ 
-  blasthitsfile$fragments[fragment_indexes[i]]<-0
-  }
-
+# fragment_indexes<-which(duplicated(blasthitsfile$unique_identifier))
+# for(i in 1:length(fragment_indexes)){ 
+#   blasthitsfile$fragments[fragment_indexes[i]]<-0
+#   }
+# 
 
 
 
@@ -89,9 +89,40 @@ positivereads<-c()
 weak_positives<-c()
 weak_positives_reads<-c()
 
+
+
+x<-blasthitsfile
+blasthitsfile<-x
+
 #convert reads to fragments based on unique identifiers in the blast file
 blasthitsfile<-blasthitsfile[which(!(duplicated(blasthitsfile$unique_identifier))),]
-blasthitsfile<-blasthitsfile[-which(blasthitsfile$full_readname=='121R27_C04_CFFv1_NA0147.37.fasta-:23112:19889:5382'),]
+
+#23502:18556:14889
+
+to_remove<-c()
+duplicated<-which(duplicated(blasthitsfile$unique_identifier))
+for(i in 1:length(duplicated)){ 
+    duplicates<-which(blasthitsfile$unique_identifier == blasthitsfile$unique_identifier[duplicated[i]])
+    first = duplicates[1]
+    second = duplicates[2]
+    #print(length(duplicates))
+    #print(length(duplicates))
+    #print(duplicates)
+    if( length( duplicates == 2)){
+      #print(i)
+      }
+    if(blasthitsfile$count[first] >= blasthitsfile$count[second]){ 
+      to_remove<-append(to_remove, second)
+    }
+     else{ 
+      to_remove<-append(to_remove,first)
+        
+      }
+  }
+
+blasthitsfile<-blasthitsfile[-to_remove,]
+
+blasthitsfile<-blasthitsfile[-c(which(blasthitsfile$sample_id=='121R27_C04_CFFv1_NA0147')),]
 
 
 
