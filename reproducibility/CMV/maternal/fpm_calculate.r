@@ -95,7 +95,7 @@ x<-blasthitsfile
 blasthitsfile<-x
 
 #convert reads to fragments based on unique identifiers in the blast file
-blasthitsfile<-blasthitsfile[which(!(duplicated(blasthitsfile$unique_identifier))),]
+#blasthitsfile<-blasthitsfile[which(!(duplicated(blasthitsfile$unique_identifier))),]
 
 #23502:18556:14889
 

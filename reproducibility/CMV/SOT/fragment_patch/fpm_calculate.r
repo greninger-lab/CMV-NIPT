@@ -9,7 +9,7 @@ library(svMisc)
 library(ggplot2)
 library(xlsx)
 
-setwd('/Users/gerbix/Documents/vikas/NIPT/nipt_git_repo/reproducibility/CMV/SOT/')
+setwd('/Users/gerbix/Documents/vikas/NIPT/nipt_git_repo/reproducibility/CMV/SOT/fragment_patch/')
 
 blasthitsfile<-read.csv('/Users/gerbix/Documents/vikas/NIPT/new_samples/blast_hits.csv')
 
@@ -50,10 +50,10 @@ for(i in 1:nrow(blasthitsfile)){
   blasthitsfile$sample_id[i]<-strsplit(blasthitsfile$readname[i],'[.]')[[1]][1]
   }
 blasthitsfile$fragments<-1
-fragment_indexes<-which(duplicated(blasthitsfile$unique_identifier))
-for(i in 1:length(fragment_indexes)){ 
-  blasthitsfile$fragments[fragment_indexes[i]]<-0
-  }
+# fragment_indexes<-which(duplicated(blasthitsfile$unique_identifier))
+# for(i in 1:length(fragment_indexes)){ 
+#   blasthitsfile$fragments[fragment_indexes[i]]<-0
+#   }
 
 
 
@@ -107,7 +107,36 @@ weak_positives_reads<-c()
 
 x<-blasthitsfile
 unique(x$unique_identifier)
-blasthitsfile<-blasthitsfile[which(!(duplicated(blasthitsfile$unique_identifier))),]
+
+
+to_remove<-c()
+duplicated<-which(duplicated(blasthitsfile$unique_identifier))
+for(i in 1:length(duplicated)){ 
+  duplicates<-which(blasthitsfile$unique_identifier == blasthitsfile$unique_identifier[duplicated[i]])
+  first = duplicates[1]
+  second = duplicates[2]
+  #print(length(duplicates))
+  #print(length(duplicates))
+  #print(duplicates)
+  if( length( duplicates == 2)){
+    print(i)
+  }
+  print(duplicates)
+  if(blasthitsfile$count[first] >= blasthitsfile$count[second]){ 
+    to_remove<-append(to_remove, second)
+  }
+  else{ 
+    to_remove<-append(to_remove,first)
+    
+  }
+}
+
+
+blasthitsfile<-blasthitsfile[-to_remove,]
+
+
+
+#blasthitsfile<-blasthitsfile[which(!(duplicated(blasthitsfile$unique_identifier))),]
 
 unique_file_list<-unique(blasthitsfile$sample_id)
 
@@ -157,7 +186,7 @@ for (i in 1:length(unique_file_list)) {
 
 
 
-read_counts_all<-read_counts_all[complete.cases(read_counts_all$sample),]
+
 #######################
 #rpkm and rpm calculation for weak positives (1 read)
 weakpositivesdf<-data.frame(weak_positives,weak_positives_reads)
@@ -197,7 +226,7 @@ for(i in 1:nrow(intermediatepositivesdf)){
 }
 
 
-
+read_counts_all<-read_counts_all[complete.cases(read_counts_all$sample),]
 
 #rpkm and rpm calculation for strong positives (over 15 reads)
 positivesdf<-data.frame(positives,positivereads)
