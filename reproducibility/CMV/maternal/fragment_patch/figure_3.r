@@ -65,7 +65,7 @@ human_plot
 #reading in CMV BAMs
 
 #provide repeatmasked fasta for 121r04 resequenced
-repeatmasked_fasta<-read.fasta('/Users/gerbix/Documents/vikas/NIPT/31119_download/resequenced/resequenced_repeatmasked_7_removed.fasta')
+repeatmasked_fasta<-read.fasta('/Users/gerbix/Documents/vikas/NIPT/121r04_resequenced/resequenced_repeatmasked_7_removed.fasta')
 fasta_IDs<-names(repeatmasked_fasta)
 
 fasta_IDs_trimmed<-c()
@@ -82,7 +82,7 @@ read_id<-c()
 sample<-c()
 
 #reads in bam to find insert sizes matched by read ID from fasta
-temp_bam<-scanBam('/Users/gerbix/Documents/vikas/NIPT/31119_download/resequenced/deduplicating/cmv_duplicates_removed.bam')
+temp_bam<-scanBam('/Users/gerbix/Documents/vikas/NIPT/121r04_resequenced/deduplicating/cmv_duplicates_removed.bam')
   all_bam_read_IDs<-temp_bam[[1]]$qname  
   matches<-c()
   for(j in 1:length(fasta_IDs_deduplicated)){ 

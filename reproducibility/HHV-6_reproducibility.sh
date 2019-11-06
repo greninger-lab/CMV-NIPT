@@ -26,7 +26,7 @@ sed '$!N;/NNNNN/!P;D' "$file"
 done > hhv6_combined_masked_n_removed.fasta
 
 #Local BLAST against NT (requires blast NT database)
-blastn -query hhv6_combined_masked_n_removed.fasta -db /db/blast_db/nt -num_threads 42 -perc_identity 95 -evalue 1e-5 -out hhv6_vs_full_nt.txt
+blastn -query hhv6_combined_masked_n_removed.fasta -db /db/blast_db/nt -num_threads 42 -perc_identity 97 -evalue 1e-5 -out hhv6_vs_full_nt.txt
 
 #Creates count table of BLAST hits to "Human hepesvirus 5" from the BLAST results.
 python blast_hits.py hhv6_masked_blastn_out.txt '<Human herpesvirus 6>'

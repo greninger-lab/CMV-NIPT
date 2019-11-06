@@ -108,7 +108,7 @@ weak_positives_reads<-c()
 x<-blasthitsfile
 unique(x$unique_identifier)
 
-
+blasthitsfile<-blasthitsfile[blasthitsfile$blast_pass==TRUE,]
 to_remove<-c()
 duplicated<-which(duplicated(blasthitsfile$unique_identifier))
 for(i in 1:length(duplicated)){ 
@@ -117,13 +117,21 @@ for(i in 1:length(duplicated)){
   second = duplicates[2]
   #print(length(duplicates))
   #print(length(duplicates))
-  #print(duplicates)
-  if( length( duplicates == 2)){
-    print(i)
-  }
+  #print(i)
   print(duplicates)
-  if(blasthitsfile$count[first] >= blasthitsfile$count[second]){ 
-    to_remove<-append(to_remove, second)
+  # if( length( duplicates == 2)){
+  #   print(i)
+  # }
+  if(blasthitsfile$count[first] >= blasthitsfile$count[second] & !identical(duplicates, integer(0))){ 
+    if(length(duplicates) > 2){ 
+      to_remove<-append(to_remove, duplicates[1:length(duplicates)])
+      next
+      }
+    if(!identical(duplicates, integer(0))){ 
+      to_remove<-append(to_remove, second)
+    }
+    else{ 
+      next}
   }
   else{ 
     to_remove<-append(to_remove,first)
@@ -131,9 +139,9 @@ for(i in 1:length(duplicated)){
   }
 }
 
-
+to_remove<-to_remove[complete.cases(to_remove)]
 blasthitsfile<-blasthitsfile[-to_remove,]
-
+blasthitsfile<-blasthitsfile[-c(which(nchar(blasthitsfile$unique_identifier) > 5)),]
 
 
 #blasthitsfile<-blasthitsfile[which(!(duplicated(blasthitsfile$unique_identifier))),]
