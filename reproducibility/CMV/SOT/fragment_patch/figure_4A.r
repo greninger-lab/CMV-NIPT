@@ -69,7 +69,7 @@ plot<-ggplot(original_new_combined, aes(x = rpm, y = quant_adjusted, color= time
   geom_smooth(method = "lm", se = FALSE, alpha = .5, aes(group=1), color = 'black') + 
   scale_color_manual(values = c("#729AF2","#BF6FF7"), labels = c("Maternal", "SOT")) + 
   theme_classic()  + 
-  annotate("text", x = 30  , y =.20, label = paste0('R^2 = ',signif(r2$adj.r.squared,digits = 3))) +
+  annotate("text", x = 30  , y =.20, label = paste0('R^2 = ',signif(r2$adj.r.squared,digits = 2))) +
   theme(text = element_text(size=8)) + 
   theme(legend.title=element_blank(), legend.position = c(.8,.2),legend.background=element_blank()) 
 plot
