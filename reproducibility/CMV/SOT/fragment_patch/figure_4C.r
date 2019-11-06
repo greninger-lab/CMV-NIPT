@@ -51,6 +51,7 @@ for(i in 1:length(duplicated)){
 
 to_remove<-to_remove[complete.cases(to_remove)]
 blast_hits_file<-blast_hits_file[-to_remove,]
+blast_hits_file<-blast_hits_file[-c(which(nchar(blast_hits_file$read_ID) > 5)),]
 
 isize<-c()
 read_id<-c()
@@ -58,14 +59,14 @@ sample<-c()
 for(i in 1:length(filenames)){ 
   temp_bam<-scanBam(filenames[i])
   if((identical(temp_bam[[1]]$qname, character(0)))){ 
-    print(i)
+    #print(i)
     next
   }
   all_bam_read_IDs<-temp_bam[[1]]$qname  
   matches<-c()
   for(j in 1:nrow(blast_hits_file)){ 
     for(k in 1:length(all_bam_read_IDs)){
-      print(blast_hits_file$read_ID[j])
+      #print(blast_hits_file$read_ID[j])
       if( !(is.na(blast_hits_file$read_ID[j])) & grepl( blast_hits_file$read_ID[j], all_bam_read_IDs[k])) { 
         isize<-append(isize, temp_bam[[1]]$isize[k])
         read_id<-append(read_id, paste(temp_bam[[1]]$qname[k],'.1'))
@@ -144,7 +145,7 @@ cumulative_freq_with_human<-ggplot(human_cmv_combined, aes(x = human_cmv_combine
   stat_ecdf(geom = 'step', size  =.5, pad = FALSE) 
 cumulative_freq_with_human
 ggsave(plot = cumulative_freq_with_human, 'figure_4c.pdf', height = 3, width = 3)
-save.image("~/Documents/vikas/NIPT/nipt_git_repo/reproducibility/CMV/SOT/figure_4c.rdata")
+save.image("~/Documents/vikas/NIPT/nipt_git_repo/reproducibility/CMV/SOT/fragment_patch/figure_4c.rdata")
 
 
 

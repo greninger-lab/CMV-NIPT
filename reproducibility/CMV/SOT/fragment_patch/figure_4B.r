@@ -18,7 +18,7 @@ for( i in 1:nrow(blast_hits_file)){
 blast_hits_file<-blast_hits_file[blast_hits_file$count>75,] 
 #blast_hits_file<-blast_hits_file[-(which(duplicated(blast_hits_file$read_ID))),]
 
-blast_hits_file<-blast_hits_file[blast_hits_file$blast_pass==TRUE,]
+#blast_hits_file<-blast_hits_file[blast_hits_file$blast_pass==TRUE,]
 to_remove<-c()
 duplicated<-which(duplicated(blast_hits_file$read_ID))
 for(i in 1:length(duplicated)){ 
