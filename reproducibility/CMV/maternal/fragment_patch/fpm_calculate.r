@@ -95,8 +95,54 @@ x<-blasthitsfile
 blasthitsfile<-x
 
 #convert reads to fragments based on unique identifiers in the blast file
-blasthitsfile<-blasthitsfile[which(!(duplicated(blasthitsfile$unique_identifier))),]
+#blasthitsfile<-blasthitsfile[which(!(duplicated(blasthitsfile$unique_identifier))),]
 
+#23502:18556:14889
+#:22401:26501:2671
+# 
+# to_remove<-c()
+# duplicated<-which(duplicated(blasthitsfile$unique_identifier))
+# for(i in 1:length(duplicated)){ 
+#     duplicates<-which(blasthitsfile$unique_identifier == blasthitsfile$unique_identifier[duplicated[i]])
+#     first = duplicates[1]
+#     second = duplicates[2]
+#     #print(length(duplicates))
+#     #print(length(duplicates))
+#     #print(duplicates)
+#     if( length( duplicates == 2)){
+#       #print(i)
+#       }
+#     if(blasthitsfile$count[first] >= blasthitsfile$count[second]){ 
+#       to_remove<-append(to_remove, second)
+#     }
+#      else{ 
+#       to_remove<-append(to_remove,first)
+#         
+#       }
+#   }
+# 
+# blasthitsfile<-blasthitsfile[-to_remove,]
+
+for(i in 1:nrow(blasthitsfile)){ 
+  if(blasthitsfile$blast_pass[i]==FALSE){ 
+    temp_id<-blasthitsfile$unique_identifier[i]
+    if(temp_id %in% blasthitsfile$unique_identifier[which(duplicated(blasthitsfile$unique_identifier))]){ 
+      temp_indexes<-which(blasthitsfile$unique_identifier==temp_id)
+      first<-temp_indexes[1]
+      second<-temp_indexes[2]
+      if(blasthitsfile$blast_pass[first] == TRUE | blasthitsfile$blast_pass[second]== TRUE){ 
+        blasthitsfile$blast_pass[first] <-TRUE
+        blasthitsfile$blast_pass[second] <-TRUE
+        }
+      }
+    
+    }
+  }
+#tf 13112:10034:9920 , 13610:3061:1660
+#ff 21401:15559:5891 , 21509:19330:6011
+
+
+blasthitsfile<-blasthitsfile[which(!(duplicated(blasthitsfile$unique_identifier))),]
 blasthitsfile<-blasthitsfile[-c(which(blasthitsfile$sample_id=='121R27_C04_CFFv1_NA0147')),]
 
 
