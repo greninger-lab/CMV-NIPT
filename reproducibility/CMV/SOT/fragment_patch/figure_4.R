@@ -5,6 +5,7 @@ library(seqinr)
 library(reshape2)
 library(cowplot)
 
+setwd('/Users/gerbix/Documents/vikas/NIPT/nipt_git_repo/reproducibility/CMV/SOT/fragment_patch')
 
 
 load(file = '/Users/gerbix/Documents/vikas/NIPT/nipt_git_repo/reproducibility/CMV/SOT/fragment_patch/figure_4A.rdata')

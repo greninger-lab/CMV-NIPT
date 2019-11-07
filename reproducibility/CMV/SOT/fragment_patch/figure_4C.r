@@ -3,55 +3,51 @@ library(Biostrings)
 library(seqinr)
 library(ggplot2)
 library(svMisc)
-library(wesanderson)
-library(RColorBrewer)
-library(Hmisc)
 
 setwd('/Users/gerbix/Documents/vikas/NIPT/nipt_git_repo/reproducibility/CMV/SOT/fragment_patch')
-blast_hits_file<-read.csv('/Users/gerbix/Documents/vikas/NIPT/new_samples/blast_hits.csv', header = FALSE, col.names = c('full_ID','count'))
+blast_hits_file<-read.csv('/Users/gerbix/Documents/vikas/NIPT/new_samples/deduplicated/blast_hits.csv', header = FALSE, col.names = c('full_ID','count'))
 filenames = list.files('/Users/gerbix/Documents/vikas/NIPT/new_samples',pattern = '.bam$', full.names = TRUE)
 plotslist<-c()
 
 
 blast_hits_file$full_ID<-as.character(blast_hits_file$full_ID)
 for( i in 1:nrow(blast_hits_file)){
+  progress( i , nrow(blast_hits_file))
   blast_hits_file$read_ID[i]<-strsplit(blast_hits_file$full_ID, '-')[[i]][2]
 } 
 
-blast_hits_file<-blast_hits_file[blast_hits_file$count>75,]
-to_remove<-c()
-duplicated<-which(duplicated(blast_hits_file$read_ID))
-for(i in 1:length(duplicated)){ 
-  duplicates<-which(blast_hits_file$read_ID == blast_hits_file$read_ID[duplicated[i]])
-  first = duplicates[1]
-  second = duplicates[2]
-  #print(length(duplicates))
-  #print(length(duplicates))
-  #print(i)
-  print(duplicates)
-  # if( length( duplicates == 2)){
-  #   print(i)
-  # }
-  if(blast_hits_file$count[first] >= blast_hits_file$count[second] & !identical(duplicates, integer(0))){ 
-    if(length(duplicates) > 2){ 
-      to_remove<-append(to_remove, duplicates[1:length(duplicates)])
-      next
-    }
-    if(!identical(duplicates, integer(0))){ 
-      to_remove<-append(to_remove, second)
-    }
-    else{ 
-      next}
+blast_hits_file$blast_pass <- TRUE
+for(i in 1:nrow(blast_hits_file)){ 
+  progress( i, nrow(blast_hits_file))
+  if(blast_hits_file$count[i] > 4 ){ 
+    blast_hits_file$blast_pass[i] <- TRUE
   }
   else{ 
-    to_remove<-append(to_remove,first)
+    blast_hits_file$blast_pass[i]<-FALSE
+  }
+  
+}
+
+#blast_hits_file<-blast_hits_file[blast_hits_file$count>75,] 
+for(i in 1:nrow(blast_hits_file)){ 
+  if(blast_hits_file$blast_pass[i]==FALSE){ 
+    temp_id<-blast_hits_file$read_ID[i]
+    if(temp_id %in% blast_hits_file$read_ID[which(duplicated(blast_hits_file$read_ID))]){ 
+      temp_indexes<-which(blast_hits_file$read_ID==temp_id)
+      first<-temp_indexes[1]
+      second<-temp_indexes[2]
+      if(blast_hits_file$blast_pass[first] == TRUE | blast_hits_file$blast_pass[second]== TRUE ){ 
+        blast_hits_file$blast_pass[first] <-TRUE
+        blast_hits_file$blast_pass[second] <-TRUE
+      }
+    }
     
   }
 }
+#tf 13112:10034:9920 , 13610:3061:1660
+#ff 21401:15559:5891 , 21509:19330:6011
 
-to_remove<-to_remove[complete.cases(to_remove)]
-blast_hits_file<-blast_hits_file[-to_remove,]
-blast_hits_file<-blast_hits_file[-c(which(nchar(blast_hits_file$read_ID) > 5)),]
+blast_hits_file<-blast_hits_file[which(!(duplicated(blast_hits_file$read_ID))),]
 
 isize<-c()
 read_id<-c()
@@ -144,7 +140,7 @@ cumulative_freq_with_human<-ggplot(human_cmv_combined, aes(x = human_cmv_combine
   theme(legend.key.size = unit(.3, "cm")) + 
   stat_ecdf(geom = 'step', size  =.5, pad = FALSE) 
 cumulative_freq_with_human
-ggsave(plot = cumulative_freq_with_human, 'figure_4c.pdf', height = 3, width = 3)
+ggsave(plot = cumulative_freq_with_human, 'figure_4C.pdf', height = 3, width = 3)
 save.image("~/Documents/vikas/NIPT/nipt_git_repo/reproducibility/CMV/SOT/fragment_patch/figure_4c.rdata")
 
 
