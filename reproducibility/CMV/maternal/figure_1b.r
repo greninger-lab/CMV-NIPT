@@ -9,7 +9,7 @@ setwd('/Users/gerbix/Documents/vikas/NIPT/nipt_git_repo/reproducibility/CMV/mate
 int_breaks <- function(x, n = 5) pretty(x, n)[pretty(x, n) %% 1 == 0] 
 
 #Modify for your own all_sample_data.csv 
-df_for_graph<-read.csv('/Users/gerbix/Documents/vikas/NIPT/nipt_git_repo/reproducibility/CMV/maternal/all_sample_data.csv')
+df_for_graph<-read.csv('/Users/gerbix/Documents/vikas/NIPT/nipt_git_repo/reproducibility/CMV/maternal/fragment_patch/all_sample_data_og.csv')
 figure_1b_plot_fpm<-ggplot(df_for_graph, aes(x=fpm, fill = classification)) + 
    geom_histogram(bins = 45, color = 'black') +  
   scale_x_log10() + 

@@ -143,7 +143,8 @@ combined_plot <- ggplot(combined, aes ( x = as.numeric(as.character(combined$isi
   theme(legend.position = c(0.8, 0.6)) + 
   ylab('Percent') + 
   theme(text = element_text(size=8)) +
-  geom_line(size = .75) 
+  theme(legend.title=element_blank(),legend.key.size = unit(1, 'lines'))+
+  geom_line(size = .5) 
 combined_plot
 
 #p-value calculations 
@@ -230,8 +231,8 @@ cum_frequency<-ggplot(subsampled_df, aes(x = subsampled_df$isizes, color = subsa
   xlab('Fragment size') + 
   theme(legend.position = c(0.8, 0.6)) + 
   ylab ('Cumulative frequency') + 
-  theme(legend.title=element_blank())+ 
-  stat_ecdf(geom = 'step', size  =.75, pad = FALSE) + 
+  theme(legend.title=element_blank(),legend.key.size = unit(1, 'lines'))+ 
+  stat_ecdf(geom = 'step', size  =.5, pad = FALSE) + 
   theme(text = element_text(size=8)) +
   xlim(c(0,500))
 cum_frequency
@@ -244,6 +245,17 @@ shapiro.test(subsampled_df$isizes[subsampled_df$type=='human'])
 #red: ED6464
 #blue: 05188B
 plot_grid(combined_plot, cum_frequency, labels = c('A','B'))
-ggsave(plot = last_plot(), height = 3, width = 6, filename = 'figure_3.pdf')
+ggsave(plot = last_plot(), height = 3, width = 6, filename = 'figure_3_modified.pdf')
+
+
+#wilcox test
+tests<-c()
+for(i in 1:100){ 
+  progress(i,100)
+  temp<-(sample(human_isize_expanded, length(CMV_isize_exanded)))
+  #print((temp))
+  wctest<-(wilcox.test(temp,CMV_isize_exanded))
+  tests<-append(tests,wctest$p.value)
+}
 
 

@@ -62,18 +62,18 @@ scientific_10 <- function(x) {
 r2=summary(lm(rpm ~ quant_adjusted, data=original_new_combined))
 plot<-ggplot(original_new_combined, aes(x = rpm, y = quant_adjusted, color= time)) + 
   geom_point() +
-  scale_y_log10(breaks = c( 1, 10, 100, 1000, 10000,100000), labels = scientific_10)+ 
-  scale_x_log10(limits = c(.01, 100), labels =scientific_10)+  
+  scale_y_log10(breaks = c( 1, 10, 100, 1000, 10000,100000), labels = trans_format("log10", math_format(10^.x)))+ 
+  scale_x_log10(limits = c(.01, 100), labels = trans_format("log10", math_format(10^.x)))+  
   ylab('CMV copies/mL') + 
   xlab('CMV FPM') + 
   geom_smooth(method = "lm", se = FALSE, alpha = .5, aes(group=1), color = 'black') + 
   scale_color_manual(values = c("#729AF2","#BF6FF7"), labels = c("Maternal", "SOT")) + 
   theme_classic()  + 
-  annotate("text", x = 30  , y =.20, label = paste0('R^2 = ',signif(r2$adj.r.squared,digits = 2))) +
+  annotate("text", x = 30  , y =.20, label = expression(mylabel)) +
   theme(text = element_text(size=8)) + 
   theme(legend.title=element_blank(), legend.position = c(.8,.2),legend.background=element_blank()) 
 plot
-ggsave(plot = plot, 'figure_4a.pdf', height = 3, width = 3)
+ggsave(plot = plot, 'figure_4a_modified.pdf', height = 3, width = 3)
 
 save.image("~/Documents/vikas/NIPT/nipt_git_repo/reproducibility/CMV/SOT/fragment_patch/figure_4A.rdata")
 
