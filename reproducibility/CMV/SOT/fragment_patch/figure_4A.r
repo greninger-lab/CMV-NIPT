@@ -60,6 +60,7 @@ scientific_10 <- function(x) {
 }
 
 r2=summary(lm(rpm ~ quant_adjusted, data=original_new_combined))
+lb1 <- paste0("r^2= ", signif(r2$adj.r.squared, digits = 2))
 plot<-ggplot(original_new_combined, aes(x = rpm, y = quant_adjusted, color= time)) + 
   geom_point() +
   scale_y_log10(breaks = c( 1, 10, 100, 1000, 10000,100000), labels = trans_format("log10", math_format(10^.x)))+ 
@@ -69,7 +70,7 @@ plot<-ggplot(original_new_combined, aes(x = rpm, y = quant_adjusted, color= time
   geom_smooth(method = "lm", se = FALSE, alpha = .5, aes(group=1), color = 'black') + 
   scale_color_manual(values = c("#729AF2","#BF6FF7"), labels = c("Maternal", "SOT")) + 
   theme_classic()  + 
-  annotate("text", x = 30  , y =.20, label = expression(mylabel)) +
+  annotate("text", x = 30  , y =.20, label = lb1, parse = FALSE) +
   theme(text = element_text(size=8)) + 
   theme(legend.title=element_blank(), legend.position = c(.8,.2),legend.background=element_blank()) 
 plot
