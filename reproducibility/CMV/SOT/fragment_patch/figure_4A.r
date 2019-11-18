@@ -70,9 +70,11 @@ plot<-ggplot(original_new_combined, aes(x = rpm, y = quant_adjusted, color= time
   geom_smooth(method = "lm", se = FALSE, alpha = .5, aes(group=1), color = 'black') + 
   scale_color_manual(values = c("#729AF2","#BF6FF7"), labels = c("Maternal", "SOT")) + 
   theme_classic()  + 
-  annotate("text", x = 30  , y =.20, label = lb1, parse = FALSE) +
-  theme(text = element_text(size=8)) + 
-  theme(legend.title=element_blank(), legend.position = c(.8,.2),legend.background=element_blank()) 
+  #annotate("text", x = 30  , y =.20, label = lb1, parse = FALSE) +
+  theme(text = element_text(size=8),
+        legend.title=element_blank(),
+        legend.position = c(.8,.2),
+        legend.spacing.y = unit(0.01, 'cm')) 
 plot
 ggsave(plot = plot, 'figure_4a_modified.pdf', height = 3, width = 3)
 
