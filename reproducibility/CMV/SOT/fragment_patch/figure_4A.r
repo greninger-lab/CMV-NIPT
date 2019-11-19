@@ -68,9 +68,9 @@ plot<-ggplot(original_new_combined, aes(x = rpm, y = quant_adjusted, color= time
   ylab('CMV copies/mL') + 
   xlab('CMV FPM') + 
   geom_smooth(method = "lm", se = FALSE, alpha = .5, aes(group=1), color = 'black') + 
-  scale_color_manual(values = c("#729AF2","#BF6FF7"), labels = c("Maternal", "SOT")) + 
+  scale_color_manual(values = c("#729AF2","#BF6FF7"), labels = c("Maternal", "Transplant")) + 
   theme_classic()  + 
-  #annotate("text", x = 30  , y =.20, label = lb1, parse = FALSE) +
+  annotate("text", x = 25  , y =.5, label = lb1, parse = FALSE) +
   theme(text = element_text(size=8),
         legend.title=element_blank(),
         legend.position = c(.8,.2),

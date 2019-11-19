@@ -124,7 +124,7 @@ cmv_plot_4b<-ggplot(combined_isize_df, aes( x=as.numeric(as.character(combined_i
   theme_classic() +
   theme(text = element_text(size=8)) +
   theme(legend.position = c(0.8, 0.6)) + 
-  theme(legend.title=element_blank())
+  theme(legend.title=element_blank(),legend.spacing.y = unit(100, 'mm'))
   cmv_plot_4b
 
 ggsave(plot = cmv_plot_4b, 'figure_4B.pdf', height = 3, width = 3)
