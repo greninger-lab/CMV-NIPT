@@ -83,8 +83,8 @@ for ( i in 1:nrow(edardf)){
 }
 edardf$length<- edarstop - edarstart
 
-hhv6astart<-42000
-hhv6astop<-90000
+hhv6astart<-0
+hhv6astop<-159000
 hhv6a<-depthcounter(hhv6apath,hhv6astart,hhv6astop)
 hhv6acounts<-hhv6a[1]
 hhv6anames<-hhv6a[2]
@@ -102,8 +102,8 @@ for ( i in 1:nrow(hhv6adf)){
 hhv6adf$length<- hhv6astop - hhv6astart
 
 
-hhv6bstart<-42000
-hhv6bstop<-90000
+hhv6bstart<-0
+hhv6bstop<-162000
 hhv6b<-depthcounter(hhv6bpath,hhv6bstart,hhv6bstop)
 hhv6bcounts<-hhv6b[1]
 hhv6bnames<-hhv6b[2]
@@ -180,11 +180,55 @@ p5 <- ggplot(allcombined, aes(x=factor(type),y=rpkm_adjusted, color=allcombined$
   scale_y_continuous(trans='log10') +
   theme(text = element_text(size=8)) 
 p5
-ggsave('figure_5A.pdf', p5, width = 3, height = 3)
+ggsave('figure_5A_full_hhv6_genome.pdf', p5, width = 3, height = 3)
 
 save.image(file = 'figure_5A.rdata')
 
 
+## EDITS
+
+ab_combined<-allcombined
+ab_combined$shape<-'circle'
+for(i in 1:nrow(ab_combined)){ 
+  if(ab_combined$type[i] == 'HHV-6B'){ 
+    ab_combined$shape[i]<-'HHV-6B'
+  }
+  if(ab_combined$type[i] == 'HHV-6A'){ 
+    ab_combined$shape[i]<-'HHV-6A'
+    }
+}
+ab_combined$type[ab_combined$type == 'HHV-6A' | ab_combined$type == 'HHV-6B'] <-'HHV-6'
+
+to_remove<-c()
+ab_combined$type<-as.character(ab_combined$type)
+ab_combined$names<-as.character(ab_combined$names)
+hhv6_unique<-unique(ab_combined$names[ab_combined$type == 'HHV-6'])
+
+for(i in 1:length(hhv6_unique)){ 
+  temp<-which(ab_combined$names == hhv6_unique[i] & ab_combined$type == 'HHV-6')
+  if(ab_combined$rpkm[temp[1]] > ab_combined$rpkm[temp[2]]){ 
+    to_remove<-append(to_remove, temp [2])
+  }
+  else{ 
+    to_remove<-append(to_remove, temp[1])
+    }
+  }
+ab_combined<-ab_combined[-to_remove,]
+
+
+p6 <- ggplot(ab_combined, aes(x=factor(type),y=rpkm_adjusted, color=ab_combined$color))+
+  scale_color_manual(values = c( '#436EEE','#077524', '#FF4500')) + 
+  geom_jitter(width = .3, size = 1, aes(shape = ab_combined$shape)) +
+  #labs(title="Average Coverage", color = 'Target') + 
+  theme_bw() +
+  theme(legend.position = 'none') + 
+  #xlab('') +
+  ylab('normalized depth') +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1),axis.title.x=element_blank())+ 
+  scale_y_continuous(trans='log10') +
+  theme(text = element_text(size=8)) 
+p6
+ggsave('figure_5A_full_hhv6_shape_combined.pdf', p6, width = 3, height = 3)
 
 
 
