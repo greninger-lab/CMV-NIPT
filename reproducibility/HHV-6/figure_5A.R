@@ -182,7 +182,6 @@ p5 <- ggplot(allcombined, aes(x=factor(type),y=rpkm_adjusted, color=allcombined$
 p5
 ggsave('figure_5A_full_hhv6_genome.pdf', p5, width = 3, height = 3)
 
-save.image(file = 'figure_5A.rdata')
 
 
 ## EDITS
@@ -231,5 +230,6 @@ p6
 ggsave('figure_5A_full_hhv6_shape_combined.pdf', p6, width = 3, height = 3)
 
 
+save.image(file = 'figure_5A.rdata')
 
 
