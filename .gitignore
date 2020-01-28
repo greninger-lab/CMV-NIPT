@@ -1,3 +1,6 @@
 *.rdata
 *.Rdata
 *history* 
+*fastq*
+*.bam
+*.sam
